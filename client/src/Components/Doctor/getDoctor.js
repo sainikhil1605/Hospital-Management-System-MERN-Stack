@@ -26,7 +26,7 @@ class GetDoctor extends React.Component {
 			authorization: Cookies.get("token"),
 		};
 		axios
-			.get("http://localhost:12347/getDoctor", { headers: headers })
+			.get("http://localhost:4000/doctor/doctorList", { headers: headers })
 			.then((resp) => {
 				console.log("hi");
 				console.log(resp);
@@ -131,7 +131,7 @@ class GetDoctor extends React.Component {
 											if (this.state.searchTerm === "") {
 												return doctor;
 											} else if (
-												doctor.Name.toLowerCase().includes(
+												doctor.doctor_name.toLowerCase().includes(
 													this.state.searchTerm.toLowerCase()
 												)
 											) {
@@ -142,9 +142,9 @@ class GetDoctor extends React.Component {
 											return (
 												<tr>
 													<th scope="row">
-														{doctor.Id}
+														{doctor.doctor_id}
 													</th>
-													<td>{doctor.Name}</td>
+													<td>{doctor.doctor_name}</td>
 													<td>{doctor.Department}</td>
 													{this.props.msg ? (
 														<h1></h1>

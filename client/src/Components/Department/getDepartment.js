@@ -25,7 +25,7 @@ class GetDepartment extends React.Component {
 			authorization: Cookies.get("token"),
 		};
 		axios
-			.get("http://localhost:12347/getDepartment", { headers: headers })
+			.get("http://localhost:4000/dept/deptList", { headers: headers })
 			.then((resp) => {
 				console.log(resp);
 				this.setState({ depts: resp.data });
@@ -38,11 +38,8 @@ class GetDepartment extends React.Component {
 			authorization: Cookies.get("token"),
 		};
 		axios
-			.post(
-				"http://localhost:12347/deleteDepartment",
-				{
-					DeptId: id,
-				},
+			.delete(
+				`http://localhost:4000/dept/deptList/${id}`,			
 				{ headers: headers }
 			)
 			.then((res) => {
@@ -119,14 +116,14 @@ class GetDepartment extends React.Component {
 										return (
 											<tr>
 												<th scope="row" id={index}>
-													{dept.DeptId}
+													{dept.dept_id}
 												</th>
 												<td>{dept.DeptName}</td>
 												<td>{dept.DeptDescription}</td>
 												<td>
 													<Button
 														color="danger"
-														id={dept.DeptId}
+														id={dept.dept_id}
 														onClick={(e) =>
 															this.handleDelete(
 																e.target.id

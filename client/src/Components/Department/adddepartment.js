@@ -32,7 +32,7 @@ class AddDepartmentForm extends React.Component {
 		};
 		axios
 			.post(
-				"http://localhost:12347/addDepartment",
+				"http://localhost:4000/dept/deptList",
 				{
 					DeptName: this.state.name,
 					DeptDescription: this.state.description,
