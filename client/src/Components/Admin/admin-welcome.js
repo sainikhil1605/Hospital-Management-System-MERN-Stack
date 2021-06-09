@@ -31,7 +31,7 @@ class AdminWelcome extends React.Component {
 	async handleSubmit(childEmail, childPswrd) {
 		await this.setState({ email: childEmail });
 		await this.setState({ password: childPswrd });
-		axios.post("http://localhost:12347/login", this.state).then((res) => {
+		axios.post("http://localhost:4000/admin/Login", this.state).then((res) => {
 			console.log(res);
 
 			if (res.data.token) {

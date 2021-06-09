@@ -1,5 +1,5 @@
 const adminModel = require("../models/adminModel");
-
+const jwt = require("jsonwebtoken");
 exports.postAdmin = function (req, res) {
     const adminData = new adminModel(req.body);
     adminData.save(function (err) {
@@ -23,7 +23,8 @@ exports.Login = function (req, res) {
             res.send("User Does not exist");
         }
         else {
-            res.send("Hello admin");
+            const token = jwt.sign({ id: doc[0].admin_id, authorized: true, name: doc[0].admin_name }, "secretkey")
+            res.header("auth-token", token).send({ "token": token });
         }
     })
 }
