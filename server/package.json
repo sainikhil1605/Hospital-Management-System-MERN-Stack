@@ -12,6 +12,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongoose": "^5.12.13"
+    "mongoose": "^5.12.13",
+    "mongoose-auto-increment": "^5.0.1"
   }
 }
