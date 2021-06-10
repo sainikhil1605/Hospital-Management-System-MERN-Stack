@@ -6,15 +6,15 @@ class SignUp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			Name: "",
-			Email: "",
-			Password: "",
-			Address: "",
-			Phone: "",
-			Sex: "",
-			BirthDate: "",
-			Age: "",
-			BloodGroup: "",
+			patient_name: "",
+			email: "",
+			password: "",
+			address: "",
+			phone: "",
+			sex: "",
+			birthdate: "",
+			age: "",
+			bloodgroup: "",
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
@@ -24,7 +24,7 @@ class SignUp extends React.Component {
 			authorization: Cookies.get("token"),
 		};
 		axios
-			.post("http://localhost:12347/addPatient", this.state, {
+			.post("http://localhost:4000/patient/patientList", this.state, {
 				headers: headers,
 			})
 			.then((res) => {
@@ -49,7 +49,7 @@ class SignUp extends React.Component {
 								<Input
 									type="text"
 									onChange={(e) =>
-										this.setState({ Name: e.target.value })
+										this.setState({ patient_name: e.target.value })
 									}
 								/>
 							</Col>
@@ -64,7 +64,7 @@ class SignUp extends React.Component {
 								<Input
 									type="email"
 									onChange={(e) =>
-										this.setState({ Email: e.target.value })
+										this.setState({ email: e.target.value })
 									}
 								/>
 							</Col>
@@ -80,7 +80,7 @@ class SignUp extends React.Component {
 									type="password"
 									onChange={(e) =>
 										this.setState({
-											Password: e.target.value,
+											password: e.target.value,
 										})
 									}
 								/>
@@ -102,7 +102,7 @@ class SignUp extends React.Component {
 									type="text"
 									onChange={(e) =>
 										this.setState({
-											Address: e.target.values,
+											address: e.target.value,
 										})
 									}
 								/>
@@ -118,7 +118,7 @@ class SignUp extends React.Component {
 								<Input
 									type="phone"
 									onChange={(e) =>
-										this.setState({ Phone: e.target.value })
+										this.setState({ phone: e.target.value })
 									}
 								/>
 							</Col>
@@ -133,7 +133,7 @@ class SignUp extends React.Component {
 								<Input
 									type="text"
 									onChange={(e) =>
-										this.setState({ Sex: e.target.value })
+										this.setState({ sex: e.target.value })
 									}
 								/>
 							</Col>
@@ -149,7 +149,7 @@ class SignUp extends React.Component {
 									type="text"
 									onChange={(e) =>
 										this.setState({
-											BirthDate: e.target.value,
+											birthdate: e.target.value,
 										})
 									}
 								/>
@@ -165,7 +165,7 @@ class SignUp extends React.Component {
 								<Input
 									type="number"
 									onChange={(e) =>
-										this.setState({ Age: e.target.value })
+										this.setState({ age: e.target.value })
 									}
 								/>
 							</Col>
@@ -181,7 +181,7 @@ class SignUp extends React.Component {
 									type="text"
 									onChange={(e) =>
 										this.setState({
-											BloodGroup: e.target.value,
+											bloodgroup: e.target.value,
 										})
 									}
 								/>

@@ -28,7 +28,7 @@ class GetPatient extends React.Component {
 		};
 
 		axios
-			.get("http://localhost:12347/getPatient", { headers: headers })
+			.get("http://localhost:4000/patient/patientList", { headers: headers })
 			.then((res) => {
 				this.setState({ patients: res.data });
 				console.log(res);
@@ -38,8 +38,8 @@ class GetPatient extends React.Component {
 	handleDelete(id) {
 		console.log(id);
 		axios
-			.post("http://localhost:12347/deletePatient", {
-				id: id,
+			.delete(`http://localhost:4000/patient/patientList/${id}`, {
+				patient_id: id,
 			})
 			.then((res) => {
 				alert("User deleted");
@@ -108,13 +108,13 @@ class GetPatient extends React.Component {
 											return (
 												<tr>
 													<th scope="row">
-														{patient.Id}
+														{patient.patient_id}
 													</th>
-													<td>{patient.Name}</td>
-													<td>{patient.Email}</td>
+													<td>{patient.patient_name}</td>
+													<td>{patient.email}</td>
 													<td>
 														<Button
-															id={patient.Id}
+															id={patient.patient_id}
 															color="danger"
 															onClick={(e) =>
 																this.handleDelete(

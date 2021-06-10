@@ -14,7 +14,7 @@ class GetFeedBack extends React.Component {
 			authorization: Cookies.get("token"),
 		};
 		axios
-			.get("http://localhost:12347/getFeedback", { headers: headers })
+			.get("http://localhost:4000/feedback/feedbackList", { headers: headers })
 			.then((res) => {
 				this.setState({ feedbacks: res.data });
 			});
@@ -35,17 +35,15 @@ class GetFeedBack extends React.Component {
 						}}
 					>
 						<thead>
-							<th>Name</th>
-							<th>Email</th>
+							<th>Id</th>
 							<th>Feedback</th>
 						</thead>
 
 						{this.state.feedbacks.map((feedback) => {
 							return (
 								<tr>
-									<td>{feedback.Name}</td>
-									<td>{feedback.Email}</td>
-									<td>{feedback.Suggestion}</td>
+									<td>{feedback.feedback_id}</td>
+									<td>{feedback.feedback}</td>
 								</tr>
 							);
 						})}

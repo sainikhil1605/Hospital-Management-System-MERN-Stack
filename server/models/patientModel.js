@@ -20,8 +20,20 @@ const patientSchema = new Schema({
     },
     address: {
         type: String
+    },
+    sex: {
+        type: String
+    },
+    birthdate: {
+        type: String
+    },
+    age: {
+        type: String
+    },
+    bloodgroup: {
+        type: String
     }
 })
-patientSchema.plugin(autoIncrement.plugin, { model: "patientModel", field: "admin_id" })
-const patientModel = mongoose.model('patientModel', adminSchema);
+patientSchema.plugin(autoIncrement.plugin, { model: "patientModel", field: "patient_id" })
+const patientModel = mongoose.model('patientModel', patientSchema);
 module.exports = patientModel;
