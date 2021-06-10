@@ -18,12 +18,12 @@ class AddDoctorForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			Name: "",
-			Email: "",
-			Password: "",
-			Address: "",
-			Phone: "",
-			Department: "",
+			doctor_name: "",
+			email: "",
+			password: "",
+			address: "",
+			phone: "",
+			department: "",
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
@@ -33,7 +33,7 @@ class AddDoctorForm extends React.Component {
 		};
 		console.log(this.state);
 		axios
-			.post("http://localhost:12347/addDoctor", this.state, {
+			.post("http://localhost:4000/doctor/DoctorList", this.state, {
 				headers: headers,
 			})
 			.then((res) => {
@@ -70,7 +70,7 @@ class AddDoctorForm extends React.Component {
 									type="text"
 									name="docname"
 									onChange={(e) =>
-										this.setState({ Name: e.target.value })
+										this.setState({ doctor_name: e.target.value })
 									}
 								/>
 							</Col>
@@ -86,7 +86,7 @@ class AddDoctorForm extends React.Component {
 									type="email"
 									name="docname"
 									onChange={(e) =>
-										this.setState({ Email: e.target.value })
+										this.setState({ email: e.target.value })
 									}
 								/>
 							</Col>
@@ -103,7 +103,7 @@ class AddDoctorForm extends React.Component {
 									name="docname"
 									onChange={(e) =>
 										this.setState({
-											Password: e.target.value,
+											password: e.target.value,
 										})
 									}
 								/>
@@ -126,7 +126,7 @@ class AddDoctorForm extends React.Component {
 									name="docname"
 									onChange={(e) =>
 										this.setState({
-											Address: e.target.value,
+											address: e.target.value,
 										})
 									}
 								/>
@@ -143,7 +143,7 @@ class AddDoctorForm extends React.Component {
 									type="phone"
 									name="docname"
 									onChange={(e) =>
-										this.setState({ Phone: e.target.value })
+										this.setState({ phone: e.target.value })
 									}
 								/>
 							</Col>
@@ -160,7 +160,7 @@ class AddDoctorForm extends React.Component {
 									name="docname"
 									onChange={(e) =>
 										this.setState({
-											Department: e.target.value,
+											department: e.target.value,
 										})
 									}
 								/>

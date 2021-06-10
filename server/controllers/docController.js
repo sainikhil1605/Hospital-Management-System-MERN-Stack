@@ -14,3 +14,15 @@ exports.postDoctorList = function (req, res) {
             res.send(err);
     })
 }
+exports.deleteDoc = (req, res) => {
+    console.log(req.params);
+    docModel.remove({ doctor_id: req.params.doctor_id }, function (err) {
+        if (err) {
+            res.send("Error occured");
+        }
+        else {
+            res.send("Delted Succesfully");
+
+        }
+    })
+}

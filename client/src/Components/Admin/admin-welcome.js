@@ -39,7 +39,8 @@ class AdminWelcome extends React.Component {
 				Cookies.set("token", res.data.token);
 
 				var name = jwt(res.data.token).name;
-				var id = jwt(res.data.token).Id;
+				var id = jwt(res.data.token).id;
+				console.log(id);
 				var auth = jwt(res.data.token).authorized;
 				// sessionStorage.setItem("token", res.data.token);
 				// sessionStorage.setItem("auth", auth);

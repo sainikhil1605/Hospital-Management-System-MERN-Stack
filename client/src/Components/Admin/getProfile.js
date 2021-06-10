@@ -18,12 +18,13 @@ class GetProfile extends React.Component {
 		const headers = {
 			authorization: Cookies.get("token"),
 		};
+		console.log(this.props.id);
 		axios
 			.post(
-				"http://localhost:12347/getProfile",
+				"http://localhost:4000/admin/AdminList",
 				{
-					Id: this.props.id,
-					Role: this.state.Role,
+					admin_id: this.props.id,
+
 				},
 				{ headers: headers }
 			)
@@ -31,10 +32,10 @@ class GetProfile extends React.Component {
 				console.log(res.data);
 				this.setState({
 					Id: this.props.id,
-					Name: res.data.Name,
-					Email: res.data.Email,
-					Address: res.data.Address,
-					Phone: res.data.Phone,
+					Name: res.data.admin_name,
+					Email: res.data.email,
+					Address: res.data.address,
+					Phone: res.data.phone,
 				});
 			});
 	}

@@ -12,7 +12,8 @@ exports.postAdmin = function (req, res) {
     })
 }
 exports.getAdmin = function (req, res) {
-    adminModel.find({}, function (er, doc) {
+    console.log(req.body);
+    adminModel.find({ admin_id: req.body.admin_id }, function (er, doc) {
         res.send(doc);
     })
 }

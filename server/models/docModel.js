@@ -18,6 +18,9 @@ const docSchema = new Schema({
     },
     phone: {
         type: String,
+    },
+    department: {
+        type: String,
     }
 })
 docSchema.plugin(autoIncrement.plugin, { model: "docModel", field: "doctor_id" })

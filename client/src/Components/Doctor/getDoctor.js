@@ -38,11 +38,9 @@ class GetDoctor extends React.Component {
 		console.log(id);
 
 		axios
-			.post("http://localhost:12347/deleteDoctor", {
-				Id: id,
-			})
+			.delete(`http://localhost:4000/doctor/deleteDoctor/${id}`)
 			.then((res) => {
-				alert("User deleted");
+				alert(res.data);
 				window.location.reload(false);
 			});
 	}
@@ -145,13 +143,13 @@ class GetDoctor extends React.Component {
 														{doctor.doctor_id}
 													</th>
 													<td>{doctor.doctor_name}</td>
-													<td>{doctor.Department}</td>
+													<td>{doctor.department}</td>
 													{this.props.msg ? (
 														<h1></h1>
 													) : (
 														<td>
 															<Button
-																id={doctor.Id}
+																id={doctor.doctor_id}
 																color="danger"
 																onClick={(e) =>
 																	this.handleDelete(
