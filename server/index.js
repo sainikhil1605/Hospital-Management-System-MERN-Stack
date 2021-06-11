@@ -6,6 +6,7 @@ const deptRouter = require("./routes/deptRoutes");
 const patientRouter = require("./routes/patientRoutes");
 const feedbackRouter = require("./routes/feedbackRoutes");
 const appointmentRouter = require("./routes/appointmentRoutes");
+const refreshController = require("./controllers/refreshController");
 const app = express();
 const cors = require("cors");
 const PORT = 4000;
@@ -20,7 +21,5 @@ app.use("/appointment", appointmentRouter);
 const mongoDB = "mongodb://localhost/HMS"
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection
-app.get("/", function (req, res) {
-    res.send("Hello world");
-})
+app.post("/token", refreshController.refreshToken);
 app.listen(PORT, () => { console.log(`Server running on ${PORT}`) });

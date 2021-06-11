@@ -37,14 +37,16 @@ class AdminWelcome extends React.Component {
 			if (res.data.token) {
 				console.log(res.data.token);
 				Cookies.set("token", res.data.token);
-
+				Cookies.set("refreshtoken", res.data.refreshtoken);
 				var name = jwt(res.data.token).name;
 				var id = jwt(res.data.token).id;
 				console.log(id);
 				var auth = jwt(res.data.token).authorized;
+				var exp = jwt(res.data.token).exp;
 				// sessionStorage.setItem("token", res.data.token);
 				// sessionStorage.setItem("auth", auth);
 				Cookies.set("auth", auth);
+				Cookies.set("exp", exp);
 				// sessionStorage.setItem("username", name);
 				Cookies.set("username", name);
 				// sessionStorage.setItem("user_id", id);
@@ -70,7 +72,18 @@ class AdminWelcome extends React.Component {
 		<Redirect to="/adminLogin" />;
 	}
 	render() {
+		var curr = new Date();
+
 		if (this.state.redirectToReq || Cookies.get("auth")) {
+			if (Cookies.get("exp") * 1000 < curr.getTime()) {
+				axios.post("http://localhost:4000/token", { token: Cookies.get("refreshtoken") }).then((res) => {
+					console.log("This is refresh")
+					console.log(res);
+					Cookies.set("token", res.data.token);
+
+				}
+				)
+			}
 			return (
 				<div>
 					<NavBar fun={() => this.logout()} />
