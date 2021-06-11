@@ -30,23 +30,21 @@ class GetDocProfile extends React.Component {
 		const headers = {
 			authorization: Cookies.get("token"),
 		};
+		const id = this.props.id;
 		axios
-			.post(
-				"http://localhost:12347/getProfile",
-				{
-					Id: this.props.id,
-					Role: this.state.Role,
-				},
+			.get(
+				`http://localhost:4000/doctor/profile/${id}`,
+
 				{ headers: headers }
 			)
 			.then((res) => {
 				console.log(res);
 				this.setState({
 					Id: this.props.id,
-					Name: res.data.Name,
-					Email: res.data.Email,
-					Address: res.data.Address,
-					Phone: res.data.Phone,
+					Name: res.data[0].doctor_name,
+					Email: res.data[0].email,
+					Address: res.data[0].address,
+					Phone: res.data[0].phone,
 				});
 			});
 	}
@@ -56,11 +54,11 @@ class GetDocProfile extends React.Component {
 			authorization: Cookies.get("token"),
 		};
 		axios
-			.post("http://localhost:12347/editProfile", this.state, {
+			.post("http://localhost:4000/doctor/profile", this.state, {
 				headers: headers,
 			})
 			.then((res) => {
-				console.log(res);
+				alert(res.data);
 			});
 	}
 

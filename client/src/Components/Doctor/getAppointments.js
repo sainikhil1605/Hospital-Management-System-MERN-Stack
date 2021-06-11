@@ -23,16 +23,13 @@ class GetAppointments extends React.Component {
 		this.handlePres = this.handlePres.bind(this);
 	}
 	componentDidMount() {
-		console.log(Cookies.get("doc_id"));
+		const id = (Cookies.get("doc_id"));
 		const headers = {
 			authorization: Cookies.get("token"),
 		};
 		axios
-			.post(
-				"http://localhost:12347/docAppointment",
-				{
-					Id: Cookies.get("doc_id"),
-				},
+			.get(
+				`http://localhost:4000/appointment/AppointmentList/${id}`,
 				{ headers: headers }
 			)
 			.then((res) => {
@@ -54,10 +51,10 @@ class GetAppointments extends React.Component {
 		console.log(appointment);
 		axios
 			.post(
-				"http://localhost:12347/addPrescription",
+				"http://localhost:4000/appointment/addPrescription",
 				{
-					Apid: appointment.Apid,
-					Prescription: this.state.prescription,
+					appointment_id: appointment.appointment_id,
+					prescription: this.state.prescription,
 				},
 				{ headers: headers }
 			)
@@ -113,7 +110,7 @@ class GetAppointments extends React.Component {
 										if (this.state.searchTerm === "") {
 											return appointment;
 										} else if (
-											appointment.Name.toLowerCase().includes(
+											appointment.patient_name.toLowerCase().includes(
 												this.state.searchTerm.toLowerCase()
 											)
 										) {
@@ -123,12 +120,12 @@ class GetAppointments extends React.Component {
 									.map((appointment) => {
 										return (
 											<tr>
-												<td>{appointment.Name}</td>
+												<td>{appointment.patient_name}</td>
 												<td>
-													{appointment.Description}
+													{appointment.description}
 												</td>
-												<td>{appointment.Day}</td>
-												<td>{appointment.Contact}</td>
+												<td>{appointment.date}</td>
+												<td>{appointment.phone}</td>
 												{this.state.isOpen ? (
 													<td></td>
 												) : (

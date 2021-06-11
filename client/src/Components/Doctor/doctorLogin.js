@@ -27,16 +27,17 @@ class DoctorLogin extends React.Component {
 	}
 	async handleSubmit(childEmail, childPswrd) {
 		await this.setState({ email: childEmail, password: childPswrd });
-		axios.post("http://localhost:12347/login", this.state).then((res) => {
+		axios.post("http://localhost:4000/doctor/loginDoctor", this.state).then((res) => {
+			console.log(res);
 			if (res.data.token) {
 				// sessionStorage.setItem("token", res.data.token);
 				Cookies.set("token", res.data.token);
 				// sessionStorage.setItem("docName", jwt(res.data.token).name);
 				Cookies.set("docName", jwt(res.data.token).name);
 				// sessionStorage.setItem("doc_id", jwt(res.data.token).Id);
-				Cookies.set("doc_id", jwt(res.data.token).Id);
+				Cookies.set("doc_id", jwt(res.data.token).id);
 				// sessionStorage.setItem("auth", jwt(res.data.token).auth);
-				Cookies.set("auth", jwt(res.data.token).auth);
+				Cookies.set("auth", jwt(res.data.token).authorized);
 				this.setState({ docredirectReq: true });
 			} else {
 				alert(res.data.message);
