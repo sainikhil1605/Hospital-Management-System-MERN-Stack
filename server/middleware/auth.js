@@ -6,14 +6,15 @@ const authMiddleware = async (req, res, next) => {
     res
       .status(StatusCodes.UNAUTHORIZED)
       .json({ error: 'Missing or invalid token' });
-  }
-  const token = authorization.split(' ')[1];
+  } else {
+    const token = authorization.split(' ')[1];
 
-  const user = await jwt.verify(token, process.env.JWT_KEY);
-  if (!user) {
-    res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Invalid token' });
+    const user = await jwt.verify(token, process.env.JWT_KEY);
+    if (!user) {
+      res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Invalid token' });
+    }
+    req.user = user;
+    next();
   }
-  req.user = user;
-  next();
 };
 module.exports = authMiddleware;
