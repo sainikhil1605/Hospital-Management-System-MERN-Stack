@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 require('express-async-errors');
+const cors = require('cors');
 const morgan = require('morgan');
 const PORT = process.env.PORT || 5000;
 const authMiddleware = require('./middleware/auth');
@@ -10,6 +11,7 @@ const connectDB = require('./db/connectDB');
 const app = express();
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cors());
 app.use('/api/v1', require('./routes/User'));
 app.use('/api/v1/patients', authMiddleware, require('./routes/Patient'));
 app.use('/api/v1/departments', authMiddleware, require('./routes/Doctor'));
