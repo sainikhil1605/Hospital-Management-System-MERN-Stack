@@ -1,4 +1,4 @@
-const FeedBack = require('../models/FeedBack');
+const FeedBack = require('../models/Feedback');
 
 const getFeedback = async (req, res) => {
   const feedbacks = await FeedBack.find({});
