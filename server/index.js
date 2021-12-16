@@ -14,7 +14,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use('/api/v1', require('./routes/User'));
 app.use('/api/v1/patients', authMiddleware, require('./routes/Patient'));
-app.use('/api/v1/departments', authMiddleware, require('./routes/Doctor'));
+app.use('/api/v1/departments', authMiddleware, require('./routes/Department'));
 app.use('/api/v1/doctors', authMiddleware, require('./routes/Doctor'));
 app.use('/api/v1/admins', authMiddleware, require('./routes/Admin'));
 app.use('/api/v1/feedback', authMiddleware, require('./routes/Feedback'));
