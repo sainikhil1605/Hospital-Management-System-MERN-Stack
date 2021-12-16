@@ -20,4 +20,5 @@ const getAdmin = async (req, res) => {
 module.exports = {
   postAdmin,
   getAdmins,
+  getAdmin
 };
