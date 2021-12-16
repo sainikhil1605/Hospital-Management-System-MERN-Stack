@@ -1,13 +1,13 @@
 import Cookies from 'js-cookie';
 import { Route, Switch } from 'react-router';
-import GetProfile from '../Components/Admin/getProfile';
+import AddDoctorForm from '../Components/Admin/AddDoctor';
+import GetDoctor from '../Components/Admin/GetDoctors';
+import GetProfile from '../Components/Admin/Profile';
 import AddDepartmentForm from '../Components/Department/addDepartment';
 import GetDepartment from '../Components/Department/getDepartment';
-import AddDoctorForm from '../Components/Doctor/addDoctor';
-import GetDoctor from '../Components/Doctor/getDoctor';
-import GetFeedBack from '../Components/Feedback/getFeedback';
+import GetFeedBack from '../Components/Feedback';
 import AddPatientForm from '../Components/Patient/addPatient';
-import GetPatient from '../Components/Patient/getPatient';
+import GetPatient from '../Components/Patient/Patients';
 export default function AdminRoutes() {
   return (
     <Switch>

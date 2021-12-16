@@ -38,7 +38,7 @@ class NavBar extends React.Component {
                   active
                   activeStyle={{ color: '#61dafb' }}
                   exact
-                  to="/adminLogin"
+                  to="/admin/addDepartment"
                 >
                   Departments
                 </NavLink>
@@ -46,7 +46,7 @@ class NavBar extends React.Component {
               <NavItem className="mynav">
                 <NavLink
                   activeStyle={{ color: '#61dafb' }}
-                  to="/adminLogin/addDoctor"
+                  to="/admin/addDoctor"
                 >
                   Doctors
                 </NavLink>
@@ -54,7 +54,7 @@ class NavBar extends React.Component {
               <NavItem className="mynav">
                 <NavLink
                   activeStyle={{ color: '#61dafb' }}
-                  to="/adminLogin/addPatient"
+                  to="/admin/patients"
                 >
                   Patients
                 </NavLink>
@@ -62,7 +62,7 @@ class NavBar extends React.Component {
               <NavItem className="mynav">
                 <NavLink
                   activeStyle={{ color: '#61dafb' }}
-                  to="/adminLogin/getFeedback"
+                  to="/admin/feedback"
                 >
                   View Feedback
                 </NavLink>

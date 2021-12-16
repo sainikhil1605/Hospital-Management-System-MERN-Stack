@@ -1,16 +1,19 @@
-import axios from 'axios';
 import jwt from 'jwt-decode';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import axiosInstance from '../../utils/axiosInstance';
-function GetProfile() {
+import Loader from '../Loader';
+function Profile() {
   const [adminDetails, setAdminDetails] = useState();
-  const { _id } = jwt.decode(localStorage.getItem('token'));
+  const { _id } = jwt(localStorage.getItem('token'));
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const getProfile = async () => {
-      const res = await axiosInstance.post(`/admins/${_id}`);
+      setLoading(true);
+      const res = await axiosInstance.get(`/admins/${_id}`);
       if (res.status === 200) {
         setAdminDetails(res.data.admin);
+        setLoading(false);
       } else {
         console.log(res.data.error);
       }
@@ -18,15 +21,17 @@ function GetProfile() {
     getProfile();
   }, []);
   const handleSubmit = async () => {
-    await axios.post('/admin', { ...adminDetails });
+    await axiosInstance.update(`/admins/${_id}`, { ...adminDetails });
   };
-
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <div>
       <Row>
         <Col md="3"></Col>
         <Col>
-          <h1 style={{ fontFamily: 'cursive' }}>Edit Profile</h1>
+          <h1>Edit Profile</h1>
           <Form>
             <FormGroup>
               <Row mt="3">
@@ -35,12 +40,11 @@ function GetProfile() {
                 </Col>
                 <Col sm="10">
                   <Input
-                    value={this.state.Name}
-                    onChange={(e) =>
-                      this.setState({
-                        Name: e.target.value,
-                      })
-                    }
+                    value={adminDetails.name}
+                    onChange={(e) => {
+                      const temp = e.target.value;
+                      setAdminDetails({ ...adminDetails, name: temp });
+                    }}
                   />
                 </Col>
               </Row>
@@ -52,12 +56,11 @@ function GetProfile() {
                 </Col>
                 <Col sm="10">
                   <Input
-                    value={this.state.Email}
-                    onChange={(e) =>
-                      this.setState({
-                        Email: e.target.value,
-                      })
-                    }
+                    value={adminDetails.email}
+                    onChange={(e) => {
+                      const temp = e.target.value;
+                      setAdminDetails({ ...adminDetails, email: temp });
+                    }}
                   />
                 </Col>
               </Row>
@@ -69,12 +72,11 @@ function GetProfile() {
                 </Col>
                 <Col sm="10">
                   <Input
-                    value={this.state.Phone}
-                    onChange={(e) =>
-                      this.setState({
-                        Phone: e.target.value,
-                      })
-                    }
+                    value={adminDetails.phone}
+                    onChange={(e) => {
+                      const temp = e.target.value;
+                      setAdminDetails({ ...adminDetails, phone: temp });
+                    }}
                   />
                 </Col>
               </Row>
@@ -86,18 +88,17 @@ function GetProfile() {
                 </Col>
                 <Col sm="10">
                   <Input
-                    value={this.state.Address}
-                    onChange={(e) =>
-                      this.setState({
-                        Address: e.target.value,
-                      })
-                    }
+                    value={adminDetails.address}
+                    onChange={(e) => {
+                      const temp = e.target.value;
+                      setAdminDetails({ ...adminDetails, address: temp });
+                    }}
                   />
                 </Col>
               </Row>
             </FormGroup>
             <FormGroup>
-              <Button onClick={(e) => this.handleSubmit(e)}>Submit</Button>
+              <Button onClick={() => handleSubmit()}>Submit</Button>
             </FormGroup>
           </Form>
         </Col>
@@ -106,4 +107,4 @@ function GetProfile() {
     </div>
   );
 }
-export default GetProfile;
+export default Profile;

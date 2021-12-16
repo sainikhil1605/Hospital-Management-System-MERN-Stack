@@ -27,7 +27,7 @@ function AddDepartmentForm() {
         name,
         description,
       });
-      if (res === 200) {
+      if (res.status === 200) {
         setMessage('Department added successfully');
       }
     } catch (err) {
@@ -52,9 +52,9 @@ function AddDepartmentForm() {
       <Form>
         <FormGroup>
           <Row className="mt-4">
-            <Col>
-              <p>{message}</p>
-            </Col>
+            <Col>{message}</Col>
+          </Row>
+          <Row className="mt-4">
             <Col md="2">
               <Label for="depName">Department Name</Label>
             </Col>

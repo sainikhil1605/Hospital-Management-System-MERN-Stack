@@ -1,7 +1,7 @@
-import { Route, Switch } from "react-router";
-import GetAppointments from "../Components/Doctor/getAppointments";
-import GetDocProfile from "../Components/Doctor/getDocProfile";
 import Cookies from "js-cookie";
+import { Route, Switch } from "react-router";
+import GetAppointments from "../Components/Doctor/Appointments";
+import GetDocProfile from "../Components/Doctor/getDocProfile";
 export default function DoctorRoutes() {
 	return (
 		<Switch>

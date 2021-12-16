@@ -11,24 +11,37 @@ import {
   Table,
 } from 'reactstrap';
 import axiosInstance from '../../utils/axiosInstance';
+import Loader from '../Loader';
 function GetDepartment() {
   const [departments, setDepartments] = useState([]);
   const [search, setSearch] = useState('');
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const getData = async () => {
+      setLoading(true);
       const res = await axiosInstance.get('/departments');
       if (res.status === 200) {
         setDepartments(res.data.departments);
+        setLoading(false);
       }
     };
     getData();
   }, []);
   const handleDelete = async (id) => {
     const res = await axiosInstance.delete(`/departments/${id}`);
-    const index = departments.findIndex((department) => department._id == id);
-    departments.splice(index, 1);
+    if (res.status === 200) {
+      const index = departments.findIndex(
+        (department) => department._id === id
+      );
+      setDepartments((prevState) => {
+        prevState.splice(index, 1);
+        return prevState;
+      });
+    }
   };
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <div>
       <Nav tabs>
@@ -73,12 +86,12 @@ function GetDepartment() {
               </tr>
             </thead>
             <tbody>
-              {this.state.depts
+              {departments
                 .filter((dept) => {
                   if (search === '') {
                     return dept;
                   } else if (
-                    dept.deptName.toLowerCase().includes(search.toLowerCase())
+                    dept.name.toLowerCase().includes(search.toLowerCase())
                   ) {
                     return dept;
                   }
@@ -87,10 +100,10 @@ function GetDepartment() {
                   return (
                     <tr>
                       <th scope="row" id={index}>
-                        {dept.dept_id}
+                        {index + 1}
                       </th>
-                      <td>{dept.DeptName}</td>
-                      <td>{dept.DeptDescription}</td>
+                      <td>{dept.name}</td>
+                      <td>{dept.description}</td>
                       <td>
                         <Button
                           color="danger"

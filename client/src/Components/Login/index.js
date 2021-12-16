@@ -26,7 +26,12 @@ function LogIn() {
       const { name, role } = jwt(token);
 
       dispatch({ type: 'LOG_IN', payload: { token, name, role } });
-      history.push(`/${role}/addDepartment`);
+      if (role === 'admin') {
+        history.push(`/${role}/addDepartment`);
+      }
+      if (role === 'doctor') {
+        history.push(`/${role}/appointments`);
+      }
     } catch (err) {
       console.log(err.error);
       setLoginError(err.error);

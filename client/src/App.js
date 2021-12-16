@@ -2,6 +2,7 @@ import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import AdminHomePage from './Components/Admin/AdminHomePage';
+import Appointments from './Components/Doctor/Appointments';
 import ErrorBoundary from './Components/ErrorBoundary';
 import Home from './Components/Home';
 import LogIn from './Components/Login';
@@ -20,6 +21,9 @@ function App() {
           </Route>
           <Route path="/admin/:pagename">
             <AdminHomePage />
+          </Route>
+          <Route path="/doctor/appoinments">
+            <Appointments />
           </Route>
         </Switch>
         <PureFooter />
