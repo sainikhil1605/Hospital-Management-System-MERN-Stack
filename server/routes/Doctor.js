@@ -14,7 +14,7 @@ const {
   postAppointment,
   updateAppointment,
 } = require('../controllers/Appointment');
-router.get('/', adminMiddleware, getDoctors);
+router.get('/', getDoctors);
 router.post('/', adminMiddleware, postDoctors);
 router.get('/:id', adminDocMiddleware, getDoctor);
 router.patch('/:id', adminMiddleware, editDoctor);

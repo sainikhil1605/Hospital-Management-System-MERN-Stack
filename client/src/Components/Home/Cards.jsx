@@ -7,7 +7,7 @@ function Card({ role, src, link }) {
   return (
     <HomeCard>
       <img width="100%" height="500px" src={src} alt="Admin" />
-      <h1>{role}</h1>
+      <h1>{role.toUpperCase()}</h1>
       <p>Click Below to Login</p>
       <Button onClick={() => history.push('/login', role)}>Log In</Button>
     </HomeCard>

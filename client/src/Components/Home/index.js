@@ -14,6 +14,7 @@ function Home() {
             paddingTop: '10px',
             flex: '1',
             position: 'absolute',
+            color: 'white',
           }}
         >
           Global Hospitals

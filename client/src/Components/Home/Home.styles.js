@@ -19,10 +19,17 @@ const HomeItem = styled.div`
 const HomeBody = styled.div`
   display: flex;
   width: 100%;
+  @media (max-width: 780px) {
+    flex-direction: column;
+  }
 `;
 const HomeCard = styled.div`
   border-right: 5px;
   border-style: solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   flex: '1';
 `;
 export { HomeContainer, HomeItem, HomeBody, HomeCard };

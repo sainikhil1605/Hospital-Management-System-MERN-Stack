@@ -4,9 +4,10 @@ import './App.css';
 import AdminHomePage from './Components/Admin/AdminHomePage';
 import Appointments from './Components/Doctor/Appointments';
 import ErrorBoundary from './Components/ErrorBoundary';
+import Footer from './Components/Footer';
 import Home from './Components/Home';
 import LogIn from './Components/Login';
-import PureFooter from './Components/PureFooter';
+import PatientHomePage from './Components/Patient';
 import store from './utils/Redux/store';
 function App() {
   return (
@@ -25,8 +26,11 @@ function App() {
           <Route path="/doctor/appoinments">
             <Appointments />
           </Route>
+          <Route path="/patient/:pagename">
+            <PatientHomePage />
+          </Route>
         </Switch>
-        <PureFooter />
+        <Footer />
       </Provider>
     </ErrorBoundary>
   );
