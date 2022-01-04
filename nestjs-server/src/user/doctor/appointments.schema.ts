@@ -2,35 +2,64 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import * as mongoose from 'mongoose';
 
-@Schema()
+@Schema({ timestamps: true })
 export class Appointments extends mongoose.Document {
-  @ApiProperty({ type: String, description: 'Patient Id', example: '12345' })
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  patientId: mongoose.Types.ObjectId;
-  @Prop({ type: String })
-  @ApiProperty({ description: 'Patient Name', example: 'John Doe' })
-  name: string;
-  @Prop({ type: String })
-  @ApiProperty({
-    description: 'Appointment description',
-    example: 'Suffering from fever',
+  @Prop({
+    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
   })
+  @ApiProperty({ type: String, description: 'Doctor Id' })
+  doctorId: mongoose.Schema.Types.ObjectId;
+
+  @Prop({
+    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  })
+  patientId: mongoose.Schema.Types.ObjectId;
+
+  @ApiProperty({
+    type: String,
+    description: 'Description of the appointment',
+    example: 'I have a cold',
+  })
+  @Prop({ type: String })
   description: string;
-  @Prop({ type: String, default: Date.now() })
-  @ApiProperty({ description: 'Appointment Date', example: '2020-01-01' })
-  date: string;
+
   @Prop({ type: String })
-  @ApiProperty({
-    description: 'Prescription by doctor',
-    example: 'Paracetomol',
-  })
   prescription: string;
-  @Prop({ type: String, enum: ['pending', 'accepted', 'rejected'] })
+
   @ApiProperty({
-    description: 'Appointment Status',
-    example: 'pending',
-    enum: ['pending', 'accepted', 'rejected'],
+    type: Date,
+    description: 'Date of the appointment',
+    example: '2020-01-01',
   })
-  status: string;
+  @Prop({
+    required: true,
+    type: Date,
+  })
+  appointmentDate: string;
+  @ApiProperty({
+    type: Date,
+    description: 'Time of the appointment',
+    example: '2020-01-01 5:40PM',
+  })
+  @Prop({
+    required: true,
+    type: Date,
+  })
+  appointmentTime: string;
+  @ApiProperty({
+    type: String,
+    description: 'Status of the appointment',
+    example: 'Pending',
+  })
+  @Prop({
+    default: 'pending',
+    type: String,
+    enum: ['pending', 'confirmed', 'rejected'],
+  })
+  appointmentStatus: string;
 }
 export const AppointmentSchema = SchemaFactory.createForClass(Appointments);

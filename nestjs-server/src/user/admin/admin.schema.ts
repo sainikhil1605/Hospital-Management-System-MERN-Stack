@@ -5,9 +5,9 @@ import * as mongoose from 'mongoose';
 export class Admin extends mongoose.Document {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   adminDetails: mongoose.Types.ObjectId;
-  @Prop({ type: String, required: [true, 'Phone is required'] })
+  @Prop({ type: String })
   phone: string;
-  @Prop({ type: String, required: [true, 'Address is required'] })
+  @Prop({ type: String })
   address: string;
   isValidPassword: Function;
 }

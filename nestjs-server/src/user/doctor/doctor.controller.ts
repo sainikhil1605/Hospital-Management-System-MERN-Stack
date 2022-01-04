@@ -7,7 +7,6 @@ import {
   Param,
   Patch,
   Post,
-  Request,
   UnauthorizedException,
   UseFilters,
   UseGuards,
@@ -23,10 +22,11 @@ import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/auth/guards/role.guard';
 import { Roles } from 'src/auth/guards/roles.decorator';
 import { MongoExceptionFilter } from '../filters/mongo.filter';
+import { User } from '../user.decorator';
 import { UserService } from '../user.service';
-import { Appointments } from './appointments.schema';
 import { Doctor } from './doctor.schema';
 import { DoctorService } from './doctor.service';
+
 @Controller('/api/v1/doctor')
 @ApiBearerAuth('access-token')
 @ApiTags('Doctor')
@@ -68,9 +68,10 @@ export class DoctorController {
     summary:
       "Get Doctor's profile by id (Doctor can view only his profile,Admin Can view All profiles",
   })
-  async getDoctor(@Param('id') id: string, @Request() req) {
-    if (req.user.role === 'doctor') {
-      if (req.user.userId.toString() === id) {
+  async getDoctor(@Param('id') id: string, @User() user: any) {
+    const { userId, role } = user;
+    if (role === 'doctor') {
+      if (userId.toString() === id) {
         return this.doctorService.getDoctor(id);
       } else {
         throw new UnauthorizedException(
@@ -78,7 +79,7 @@ export class DoctorController {
         );
       }
     }
-    if (req.user.role === 'admin') {
+    if (role === 'admin') {
       return this.doctorService.getDoctor(id);
     }
   }
@@ -86,10 +87,8 @@ export class DoctorController {
   @Roles('doctor')
   @ApiOperation({ summary: 'Update doctor (Doctor Only allowed)' })
   @Patch('/')
-  async updateDoctor(@Body() doctorDetails: Doctor, @Request() req) {
-    const {
-      user: { userId },
-    } = req;
+  async updateDoctor(@Body() doctorDetails: Doctor, @User() user: any) {
+    const { userId } = user;
 
     return this.doctorService.updateDoctor(userId, doctorDetails);
   }
@@ -101,24 +100,12 @@ export class DoctorController {
     return this.doctorService.deleteDoctor(id);
   }
 
-  @Roles('patient', 'admin')
-  @ApiOperation({ summary: 'Book Appointment (Patient and Admin allowed)' })
-  @Post('/:id/appointment')
-  async bookAppointment(
-    @Param('id') id: string,
-    @Body() appointmentDetails: Appointments,
-  ) {
-    return this.doctorService.bookAppointment(id, appointmentDetails);
-  }
-
   @UseGuards(RolesGuard)
   @Roles('doctor')
   @ApiOperation({ summary: 'Get all appointments (Doctor only allowed)' })
   @Get('/appointments')
-  async getAllAppointments(@Request() req) {
-    const {
-      user: { userId },
-    } = req;
+  async getAllAppointments(@User() user: any) {
+    const { userId } = user;
 
     return this.doctorService.getAllAppointments(userId);
   }

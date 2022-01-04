@@ -10,6 +10,8 @@ export class DoctorService {
   constructor(
     @InjectModel(Doctor.name) private doctorModel: Model<Doctor>,
     @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(Appointments.name)
+    private appointmentModel: Model<Appointments>,
   ) {}
   async getAllDoctors(): Promise<Doctor[]> {
     return this.doctorModel.find({}).populate('doctorDetails', 'email name');
@@ -39,19 +41,18 @@ export class DoctorService {
       { new: true },
     );
   }
-  async getAllAppointments(id: string): Promise<Doctor> {
-    return this.doctorModel
-      .findOne({ doctorDetails: id })
-      .select('appointments');
+  async getAllAppointments(id: string): Promise<Appointments[]> {
+    return this.appointmentModel.find({ doctorId: id });
   }
 
-  async addPrescription(id: string, prescription: string): Promise<Doctor> {
-    const data = await this.doctorModel.findById(id).select('appointments');
-    const appointment = data.appointments.find(
-      (x) => x._id.toString() === id.toString,
+  async addPrescription(
+    id: string,
+    prescription: string,
+  ): Promise<Appointments> {
+    return this.appointmentModel.findOneAndUpdate(
+      { _id: id },
+      { prescription },
+      { new: true },
     );
-    appointment.prescription = prescription;
-    data.save();
-    return data;
   }
 }
