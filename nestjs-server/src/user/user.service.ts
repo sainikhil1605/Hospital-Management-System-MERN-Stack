@@ -15,10 +15,18 @@ export class UserService {
     @InjectModel(User.name) private userModel: Model<User>,
   ) {}
 
-  async findUser(email: string, role: string): Promise<User> {
-    return await this.userModel.findOne({ email, role });
+  async findUser(email: string): Promise<User> {
+    return await this.userModel.findOne({ email });
   }
   async register(userDetails: any) {
-    return this.userModel.create({ ...userDetails });
+    const user = await this.userModel.create({ ...userDetails });
+    if (userDetails.role === 'admin') {
+      await this.adminModel.create({ adminDetails: user._id });
+    } else if (userDetails.role === 'doctor') {
+      await this.doctorModel.create({ doctorDetails: user._id });
+    } else if (userDetails.role === 'patient') {
+      await this.patientModel.create({ patientDetails: user._id });
+    }
+    return user;
   }
 }

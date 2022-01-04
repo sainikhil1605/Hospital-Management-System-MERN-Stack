@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(helmet('no-cache'));
   const config = new DocumentBuilder()
-    .setTitle('HMS APi')
+    .setTitle('HMS API')
     .setDescription('API for Hospital Management System')
     .setVersion('1.0')
     .addBearerAuth(

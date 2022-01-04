@@ -3,15 +3,15 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/auth/guards/role.guard';
 import { Roles } from 'src/auth/guards/roles.decorator';
-@Controller('/api/v1/admin')
+@Controller('/api/v1/patient')
 @ApiBearerAuth('access-token')
-@ApiTags('admin')
+@ApiTags('patient')
 @UseGuards(JwtGuard, RolesGuard)
-export class AdminController {
+export class PatientController {
   constructor() {}
-  @Roles('admin')
+  @Roles('patient')
   @Get('/')
   async check() {
-    return 'admin';
+    return 'doctor';
   }
 }

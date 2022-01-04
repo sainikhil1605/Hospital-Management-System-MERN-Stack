@@ -2,7 +2,10 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AdminController } from './admin/admin.controller';
 import { AdminSchema } from './admin/admin.schema';
+import { DoctorController } from './doctor/doctor.controller';
 import { DoctorSchema } from './doctor/doctor.schema';
+import { DoctorService } from './doctor/doctor.service';
+import { PatientController } from './patient/patient.controller';
 import { PatientSchema } from './patient/patient.schema';
 import { UserService } from './user.service';
 import { UserSchema } from './users.schema';
@@ -29,8 +32,8 @@ import { UserSchema } from './users.schema';
       },
     ]),
   ],
-  providers: [UserService],
-  controllers: [AdminController],
+  providers: [UserService, DoctorService],
+  controllers: [AdminController, DoctorController, PatientController],
   exports: [UserService],
 })
 export class UserModule {}

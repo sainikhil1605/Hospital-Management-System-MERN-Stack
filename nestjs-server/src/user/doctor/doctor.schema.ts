@@ -1,18 +1,35 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 import * as mongoose from 'mongoose';
 import { Appointments, AppointmentSchema } from './appointments.schema';
 
 @Schema({ timestamps: true })
 export class Doctor extends mongoose.Document {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  doctorId: mongoose.Types.ObjectId;
-  @Prop({ type: String, required: [true, 'Phone is required'] })
+  doctorDetails: mongoose.Types.ObjectId;
+  @ApiProperty({
+    type: String,
+    description: 'Doctor Phone number',
+    example: '+923335555555',
+  })
+  @Prop({ type: String })
   phone: string;
-  @Prop({ type: String, required: [true, 'Address is required'] })
+  @ApiProperty({ type: String, description: 'Doctor Address', example: 'Doha' })
+  @Prop({ type: String })
   address: string;
-  @Prop({ type: String, required: [true, 'Specialization is required'] })
+  @ApiProperty({
+    type: String,
+    description: 'Doctor Specialization',
+    example: 'Cardiologist',
+  })
+  @Prop({ type: String })
   specialization: string;
   @Prop({ type: AppointmentSchema })
+  @ApiProperty({
+    type: Appointments,
+    isArray: true,
+    description: 'Doctor Appointments',
+  })
   appointments: Appointments[];
   isValidPassword: Function;
 }

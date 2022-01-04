@@ -1,11 +1,21 @@
-import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Request,
+  UnauthorizedException,
+  UseFilters,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth/auth.service';
 import { AuthDto } from './auth/dto/auth.dto';
+import { SignUpDto } from './auth/dto/signup.dto';
 import { LocalGuard } from './auth/guards/local.guard';
+import { MongoExceptionFilter } from './user/filters/mongo.filter';
 import { UserService } from './user/user.service';
 
-@Controller()
+@Controller('/api/v1/auth')
 @ApiTags('auth')
 export class AppController {
   constructor(
@@ -21,8 +31,15 @@ export class AppController {
   }
 
   @Post('/register')
-  @ApiBody({ type: AuthDto })
-  register(@Body() body: any) {
-    return this.userService.register(body);
+  @ApiBody({ type: SignUpDto })
+  @UseFilters(MongoExceptionFilter)
+  async register(@Body() body: SignUpDto) {
+    if (body.role === 'doctor') {
+      throw new UnauthorizedException(
+        'Doctor registration is not allowed please contact admin',
+      );
+    }
+    const user = await this.userService.register(body);
+    return this.authService.generateAuthToken(user);
   }
 }

@@ -3,7 +3,7 @@ import * as mongoose from 'mongoose';
 @Schema({ timestamps: true })
 export class Patient extends mongoose.Document {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  doctorId: mongoose.Types.ObjectId;
+  patientDetails: mongoose.Types.ObjectId;
   @Prop({ type: String, required: [true, 'Phone is required'] })
   phone: string;
   @Prop({ type: String, required: [true, 'Address is required'] })

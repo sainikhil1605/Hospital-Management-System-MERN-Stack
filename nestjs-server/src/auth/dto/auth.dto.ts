@@ -5,6 +5,4 @@ export class AuthDto {
   email: string;
   @ApiProperty({ example: '123456', description: 'User password' })
   password: string;
-  @ApiProperty({ example: 'admin', description: 'User role' })
-  role: string;
 }

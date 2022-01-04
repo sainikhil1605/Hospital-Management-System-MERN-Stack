@@ -12,19 +12,20 @@ export class RolesGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
-    console.log(roles);
+
     if (!roles) {
       return true;
     }
+
     const request = context.switchToHttp().getRequest();
     const user = request.user;
-    console.log(roles);
-    console.log(user.role);
+
     if (roles.indexOf(user.role) !== -1) {
       return true;
+    } else {
+      throw new UnauthorizedException(
+        'You do not have permission to access this resource',
+      );
     }
-    throw new UnauthorizedException(
-      'You do not have permission to access this resource',
-    );
   }
 }
