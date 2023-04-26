@@ -34,8 +34,18 @@ function NavBar() {
                 </NavLink>
               </NavItem>
               <NavItem className="mynav">
+                <NavLink activeStyle={{ color: "#61dafb" }} to="/doctors">
+                  Doctors
+                </NavLink>
+              </NavItem>
+              <NavItem className="mynav">
                 <NavLink activeStyle={{ color: "#61dafb" }} to="/user/bills">
                   Bills
+                </NavLink>
+              </NavItem>
+              <NavItem className="mynav">
+                <NavLink activeStyle={{ color: "#61dafb" }} to="/carriers">
+                  Insurance Carriers
                 </NavLink>
               </NavItem>
             </Nav>
@@ -74,6 +84,16 @@ function NavBar() {
             <NavItem className="mynav">
               <NavLink activeStyle={{ color: "#61dafb" }} to="/admin/profile">
                 Profile
+              </NavLink>
+            </NavItem>
+            <NavItem className="mynav">
+              <NavLink activeStyle={{ color: "#61dafb" }} to="/rooms">
+                Rooms
+              </NavLink>
+            </NavItem>
+            <NavItem className="mynav">
+              <NavLink activeStyle={{ color: "#61dafb" }} to="/carriers">
+                Insurance Carriers
               </NavLink>
             </NavItem>
           </Nav>

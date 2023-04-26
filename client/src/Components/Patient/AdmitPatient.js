@@ -14,6 +14,7 @@ import {
 import axiosInstance from "../../utils/axiosInstance";
 import Loader from "../Loader";
 import moment from "moment";
+import { DatePicker } from "reactstrap-date-picker";
 const AdmitPatient = () => {
   const { id } = useParams();
 
@@ -232,12 +233,13 @@ const AdmitPatient = () => {
               <Label for="docname">Admit Date</Label>
             </Col>
             <Col sm="6">
-              <Input
+              <DatePicker
                 type="date"
                 name="docname"
-                minValue="today"
-                onChange={(e) =>
-                  setAdmitData({ ...admitData, admit_date: e.target.value })
+                maxDate={new Date().toISOString()}
+                value={admitData.admit_date}
+                onChange={(value) =>
+                  setAdmitData({ ...admitData, admit_date: value })
                 }
               />
             </Col>

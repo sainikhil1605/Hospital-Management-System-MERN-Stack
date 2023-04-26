@@ -3,11 +3,13 @@ import { useSelector } from "react-redux";
 import { Button, Col, Input, Row, Table } from "reactstrap";
 import axiosInstance from "../../utils/axiosInstance";
 import Loader from "../Loader";
+import { useHistory } from "react-router-dom";
 function DoctorList() {
   const [doctors, setDoctors] = useState([]);
   const [search, setSearch] = useState("");
   const role = useSelector((state) => state.login.role);
   const [loading, setLoading] = useState(true);
+  const history = useHistory();
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
@@ -72,15 +74,28 @@ function DoctorList() {
                         <td>{doctor.name}</td>
                         <td>{doctor.department}</td>
                         {role !== "admin" ? null : (
-                          <td>
-                            <Button
-                              id={doctor._id}
-                              color="danger"
-                              onClick={(e) => handleDelete(e.target.id)}
-                            >
-                              Delete
-                            </Button>
-                          </td>
+                          <>
+                            <td>
+                              <Button
+                                id={doctor._id}
+                                color="danger"
+                                onClick={(e) => handleDelete(e.target.id)}
+                              >
+                                Delete
+                              </Button>
+                            </td>
+                            <td>
+                              <Button
+                                id={doctor._id}
+                                color="primary"
+                                onClick={(e) =>
+                                  history.push(`/doctor/${e.target.id}`)
+                                }
+                              >
+                                Edit
+                              </Button>
+                            </td>
+                          </>
                         )}
                       </tr>
                     );

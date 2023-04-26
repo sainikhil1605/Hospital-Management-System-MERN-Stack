@@ -8,6 +8,7 @@ function AdminProfile() {
   const [adminDetails, setAdminDetails] = useState();
   const { _id } = jwt(localStorage.getItem("token"));
   const [loading, setLoading] = useState(true);
+  const [password, setPassword] = useState();
   const history = useHistory();
   useEffect(() => {
     if (localStorage.getItem("token") === null) {
@@ -101,6 +102,13 @@ function AdminProfile() {
                       setAdminDetails({ ...adminDetails, address: temp });
                     }}
                   />
+                </Col>
+              </Row>
+            </FormGroup>
+            <FormGroup>
+              <Row mt="3">
+                <Col sm="12">
+                  <Button color="primary">Change Password?</Button>
                 </Col>
               </Row>
             </FormGroup>

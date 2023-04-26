@@ -26,6 +26,7 @@
     "react-scripts": "4.0.3",
     "react-social-icons": "^5.2.0",
     "reactstrap": "^8.9.0",
+    "reactstrap-date-picker": "^1.0.9",
     "redux": "^4.1.2",
     "styled-components": "^5.3.3",
     "web-vitals": "^1.1.1"

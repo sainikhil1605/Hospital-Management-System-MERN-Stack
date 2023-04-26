@@ -1,18 +1,30 @@
-import { useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import axiosInstance from "../../utils/axiosInstance";
+import { useEffect, useState } from "react";
 
-const AddDoctor = () => {
-  const [docDetails, setDocDetails] = useState({});
+const EditDoctor = (props) => {
+  const { id } = useParams();
+  const [doctor, setDoctor] = useState({});
+  // const [departments, setDepartments] = useState([]);
+  //   const [docDetails, setDocDetails] = useState({});
   const location = useLocation();
   const history = useHistory();
   const handleSubmit = async () => {
-    const data = await axiosInstance.post("/doctor", docDetails);
+    const data = await axiosInstance.patch(`/doctor/${id}`, doctor);
     if (data.status === 201) {
       history.push("/doctors");
     }
   };
+  useEffect(() => {
+    const getData = async () => {
+      const {
+        data: { doctor },
+      } = await axiosInstance.get(`/doctor/${id}`);
+      setDoctor(doctor);
+    };
+    getData();
+  }, [id]);
   return (
     <>
       <Form className="mt-3" style={{ margin: "auto", maxWidth: "800px" }}>
@@ -25,9 +37,8 @@ const AddDoctor = () => {
               <Input
                 type="text"
                 name="docname"
-                onChange={(e) =>
-                  setDocDetails({ ...docDetails, name: e.target.value })
-                }
+                value={doctor.name}
+                onChange={(e) => setDoctor({ ...doctor, name: e.target.value })}
               />
             </Col>
           </Row>
@@ -41,8 +52,9 @@ const AddDoctor = () => {
               <Input
                 type="email"
                 name="docname"
+                value={doctor.email}
                 onChange={(e) =>
-                  setDocDetails({ ...docDetails, email: e.target.value })
+                  setDoctor({ ...doctor, email: e.target.value })
                 }
               />
             </Col>
@@ -57,9 +69,8 @@ const AddDoctor = () => {
               <Input
                 type="number"
                 name="docname"
-                onChange={(e) =>
-                  setDocDetails({ ...docDetails, fee: e.target.value })
-                }
+                value={doctor.fee}
+                onChange={(e) => setDoctor({ ...doctor, fee: e.target.value })}
               />
             </Col>
           </Row>
@@ -73,8 +84,9 @@ const AddDoctor = () => {
               <Input
                 type="phone"
                 name="docname"
+                value={doctor.phone}
                 onChange={(e) =>
-                  setDocDetails({ ...docDetails, phone: e.target.value })
+                  setDoctor({ ...doctor, phone: e.target.value })
                 }
               />
             </Col>
@@ -89,8 +101,9 @@ const AddDoctor = () => {
               <Input
                 type="text"
                 name="docname"
+                value={doctor.department}
                 onChange={(e) =>
-                  setDocDetails({ ...docDetails, department: e.target.value })
+                  setDoctor({ ...doctor, department: e.target.value })
                 }
               />
             </Col>
@@ -109,4 +122,4 @@ const AddDoctor = () => {
     </>
   );
 };
-export default AddDoctor;
+export default EditDoctor;

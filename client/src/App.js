@@ -23,6 +23,15 @@ import AdmitPatient from "./Components/Patient/AdmitPatient";
 import PatientDetails from "./Components/Patient/PatientDetails";
 import Profile from "./Components/Patient/Profile";
 import PatientBills from "./Components/Bills/PatientBills";
+import Rooms from "./Components/Rooms";
+import ViewRoom from "./Components/Rooms/ViewRoom";
+import Carrier from "./Components/Carriers";
+import RoomNav from "./Components/Rooms/RoomNav";
+import AddRoom from "./Components/Rooms/AddRoom";
+import CarrierNav from "./Components/Carriers/CarrierNav";
+import AddCarrier from "./Components/Carriers/AddCarrier";
+import EditDoctor from "./Components/Doctor/EditDoctor";
+import ProtectedRoute from "./utils/ProtectedRoute";
 function App() {
   const location = useLocation();
   return (
@@ -60,9 +69,11 @@ function App() {
               <AddDoctor />
             </DoctorNav>
           </Route>
-          <Route path="/admin/profile">
+
+          <ProtectedRoute path="/admin/profile">
             <AdminProfile />
-          </Route>
+          </ProtectedRoute>
+
           <Route exact path="/patients">
             <PatientNav>
               <Patients />
@@ -84,6 +95,34 @@ function App() {
           </Route>
           <Route path="/user/bills">
             <PatientBills />
+          </Route>
+          <Route path="/rooms/add">
+            <RoomNav>
+              <AddRoom />
+            </RoomNav>
+          </Route>
+          <Route path="/rooms/:id">
+            <RoomNav>
+              <ViewRoom />
+            </RoomNav>
+          </Route>
+          <Route path="/rooms">
+            <RoomNav>
+              <Rooms />
+            </RoomNav>
+          </Route>
+          <Route path="/carriers/add">
+            <CarrierNav>
+              <AddCarrier />
+            </CarrierNav>
+          </Route>
+          <Route path="/carriers">
+            <CarrierNav>
+              <Carrier />
+            </CarrierNav>
+          </Route>
+          <Route path="/doctor/:id">
+            <EditDoctor />
           </Route>
         </Switch>
         <Footer />

@@ -2,7 +2,7 @@ import jwtDecode from "jwt-decode";
 import { Link, useLocation } from "react-router-dom";
 import { Nav, NavItem, NavLink } from "reactstrap";
 
-const DoctorNav = ({ children }) => {
+const CarrierNav = ({ children }) => {
   const location = useLocation();
   const { role } = jwtDecode(localStorage.getItem("token"));
   return (
@@ -11,13 +11,13 @@ const DoctorNav = ({ children }) => {
         <>
           <Nav tabs>
             <NavItem>
-              <NavLink active={location.pathname === "/doctors/add"}>
-                <Link to="/doctors/add">Add Doctor</Link>
+              <NavLink active={location.pathname === "/carriers/add"}>
+                <Link to="/carriers/add">Add Carrier</Link>
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink active={location.pathname === "/doctors/"}>
-                <Link to="/doctors/">Doctor List</Link>
+              <NavLink active={location.pathname === "/carriers"}>
+                <Link to="/carriers/">Carriers List</Link>
               </NavLink>
             </NavItem>
           </Nav>
@@ -27,4 +27,4 @@ const DoctorNav = ({ children }) => {
     </>
   );
 };
-export default DoctorNav;
+export default CarrierNav;

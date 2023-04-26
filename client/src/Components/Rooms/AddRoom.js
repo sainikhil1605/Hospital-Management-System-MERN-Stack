@@ -1,32 +1,33 @@
 import { useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
-import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import axiosInstance from "../../utils/axiosInstance";
+import { useHistory } from "react-router-dom";
+import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
-const AddDoctor = () => {
-  const [docDetails, setDocDetails] = useState({});
-  const location = useLocation();
+const AddRoom = () => {
+  const [roomData, setRoomData] = useState();
   const history = useHistory();
-  const handleSubmit = async () => {
-    const data = await axiosInstance.post("/doctor", docDetails);
-    if (data.status === 201) {
-      history.push("/doctors");
-    }
+  const handleSubmit = async (e) => {
+    // e.preventDefault();
+    const {
+      data: { room },
+    } = await axiosInstance.post("/room", roomData);
+    history.push(`/rooms/${room._id}`);
   };
   return (
-    <>
+    <div>
+      <h1>Add Room</h1>
       <Form className="mt-3" style={{ margin: "auto", maxWidth: "800px" }}>
         <FormGroup>
           <Row className="mt-4">
             <Col sm="2">
-              <Label for="docname">Name *</Label>
+              <Label for="docname">Room Number</Label>
             </Col>
             <Col sm="8">
               <Input
                 type="text"
-                name="docname"
+                name="room_no"
                 onChange={(e) =>
-                  setDocDetails({ ...docDetails, name: e.target.value })
+                  setRoomData({ ...roomData, room_no: e.target.value })
                 }
               />
             </Col>
@@ -35,30 +36,14 @@ const AddDoctor = () => {
         <FormGroup>
           <Row>
             <Col sm="2">
-              <Label for="docname">Email *</Label>
-            </Col>
-            <Col sm="8">
-              <Input
-                type="email"
-                name="docname"
-                onChange={(e) =>
-                  setDocDetails({ ...docDetails, email: e.target.value })
-                }
-              />
-            </Col>
-          </Row>
-        </FormGroup>
-        <FormGroup>
-          <Row>
-            <Col sm="2">
-              <Label for="docname">Fee</Label>
+              <Label for="docname">Cost Per Day</Label>
             </Col>
             <Col sm="8">
               <Input
                 type="number"
-                name="docname"
+                name="cost_per_day"
                 onChange={(e) =>
-                  setDocDetails({ ...docDetails, fee: e.target.value })
+                  setRoomData({ ...roomData, cost_per_day: e.target.value })
                 }
               />
             </Col>
@@ -67,14 +52,14 @@ const AddDoctor = () => {
         <FormGroup>
           <Row>
             <Col sm="2">
-              <Label for="docname">Phone</Label>
+              <Label for="docname">Number of Beds</Label>
             </Col>
             <Col sm="8">
               <Input
-                type="phone"
-                name="docname"
+                type="number"
+                name="no_of_beds"
                 onChange={(e) =>
-                  setDocDetails({ ...docDetails, phone: e.target.value })
+                  setRoomData({ ...roomData, no_of_beds: e.target.value })
                 }
               />
             </Col>
@@ -83,14 +68,17 @@ const AddDoctor = () => {
         <FormGroup>
           <Row>
             <Col sm="2">
-              <Label for="docname">Department</Label>
+              <Label for="docname">Meal Cost Per Day</Label>
             </Col>
             <Col sm="8">
               <Input
-                type="text"
-                name="docname"
+                type="number"
+                name="meal_cost_per_day"
                 onChange={(e) =>
-                  setDocDetails({ ...docDetails, department: e.target.value })
+                  setRoomData({
+                    ...roomData,
+                    meal_cost_per_day: e.target.value,
+                  })
                 }
               />
             </Col>
@@ -106,7 +94,8 @@ const AddDoctor = () => {
           </Row>
         </FormGroup>
       </Form>
-    </>
+    </div>
   );
 };
-export default AddDoctor;
+
+export default AddRoom;
