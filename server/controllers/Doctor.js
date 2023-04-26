@@ -1,7 +1,7 @@
-const Doctor = require('../models/Doctor');
-const { StatusCodes } = require('http-status-codes');
+const Doctor = require("../models/Doctor");
+const { StatusCodes } = require("http-status-codes");
 const getDoctors = async (req, res) => {
-  const doctors = await Doctor.find({}).select('-password');
+  const doctors = await Doctor.find({});
 
   res.status(StatusCodes.OK).json({ doctors });
 };
@@ -16,7 +16,7 @@ const deleteDoctor = async (req, res) => {
 };
 
 const getDoctor = async (req, res) => {
-  const doctor = await Doctor.findById(req.params.id).select('-password');
+  const doctor = await Doctor.findById(req.params.id).select("-password");
   res.status(StatusCodes.OK).json({ doctor });
 };
 const editDoctor = async (req, res) => {

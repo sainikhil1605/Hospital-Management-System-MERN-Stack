@@ -1,42 +1,42 @@
 import jwt from "jwt-decode";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import axiosInstance from "../../utils/axiosInstance";
 import Loader from "../Loader";
-
-function Profile() {
-  const [patientDetails, setPatientDetails] = useState({});
-  const [loading, setLoading] = useState(true);
+import { useHistory } from "react-router-dom";
+function AdminProfile() {
+  const [adminDetails, setAdminDetails] = useState();
   const { _id } = jwt(localStorage.getItem("token"));
+  const [loading, setLoading] = useState(true);
   const history = useHistory();
   useEffect(() => {
     if (localStorage.getItem("token") === null) {
       history.push("/login");
     }
-    const getData = async () => {
+    const getProfile = async () => {
       setLoading(true);
-      const res = await axiosInstance.get(`/patient/${_id}`);
+      const res = await axiosInstance.get(`/admin/${_id}`);
       if (res.status === 200) {
-        setPatientDetails(res.data.patient?.[0]);
+        setAdminDetails(res.data.admin);
         setLoading(false);
+      } else {
+        console.log(res.data.error);
       }
     };
-    getData();
-  }, [_id]);
+
+    getProfile();
+  }, []);
   const handleSubmit = async () => {
-    const res = await axiosInstance.patch(`/patient/${_id}`, {
-      ...patientDetails,
-    });
-    alert("Details Updated Successfully");
+    await axiosInstance.patch(`/admin/${_id}`, { ...adminDetails });
+    window.location.reload();
   };
-  console.log(patientDetails);
   if (loading) {
     return <Loader />;
   }
   return (
     <div>
-      <Row className="mt-4">
+      <Row>
+        <Col md="3"></Col>
         <Col>
           <h1>Edit Profile</h1>
           <Form>
@@ -47,13 +47,11 @@ function Profile() {
                 </Col>
                 <Col sm="10">
                   <Input
-                    value={patientDetails?.name}
-                    onChange={(e) =>
-                      setPatientDetails({
-                        ...patientDetails,
-                        name: e.target.value,
-                      })
-                    }
+                    value={adminDetails.name}
+                    onChange={(e) => {
+                      const temp = e.target.value;
+                      setAdminDetails({ ...adminDetails, name: temp });
+                    }}
                   />
                 </Col>
               </Row>
@@ -65,13 +63,11 @@ function Profile() {
                 </Col>
                 <Col sm="10">
                   <Input
-                    value={patientDetails?.email}
-                    onChange={(e) =>
-                      setPatientDetails({
-                        ...patientDetails,
-                        email: e.target.value,
-                      })
-                    }
+                    value={adminDetails.email}
+                    onChange={(e) => {
+                      const temp = e.target.value;
+                      setAdminDetails({ ...adminDetails, email: temp });
+                    }}
                   />
                 </Col>
               </Row>
@@ -83,13 +79,11 @@ function Profile() {
                 </Col>
                 <Col sm="10">
                   <Input
-                    value={patientDetails?.phone}
-                    onChange={(e) =>
-                      setPatientDetails({
-                        ...patientDetails,
-                        phone: e.target.value,
-                      })
-                    }
+                    value={adminDetails.phone}
+                    onChange={(e) => {
+                      const temp = e.target.value;
+                      setAdminDetails({ ...adminDetails, phone: temp });
+                    }}
                   />
                 </Col>
               </Row>
@@ -101,13 +95,11 @@ function Profile() {
                 </Col>
                 <Col sm="10">
                   <Input
-                    value={patientDetails?.address}
-                    onChange={(e) =>
-                      setPatientDetails({
-                        ...patientDetails,
-                        address: e.target.value,
-                      })
-                    }
+                    value={adminDetails.address}
+                    onChange={(e) => {
+                      const temp = e.target.value;
+                      setAdminDetails({ ...adminDetails, address: temp });
+                    }}
                   />
                 </Col>
               </Row>
@@ -117,10 +109,9 @@ function Profile() {
             </FormGroup>
           </Form>
         </Col>
-        <Col sm="6"></Col>
+        <Col sm="4"></Col>
       </Row>
     </div>
   );
 }
-
-export default Profile;
+export default AdminProfile;
