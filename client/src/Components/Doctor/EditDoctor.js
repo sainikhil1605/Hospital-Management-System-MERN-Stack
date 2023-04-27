@@ -12,7 +12,7 @@ const EditDoctor = (props) => {
   const history = useHistory();
   const handleSubmit = async () => {
     const data = await axiosInstance.patch(`/doctor/${id}`, doctor);
-    if (data.status === 201) {
+    if (data.status === 200) {
       history.push("/doctors");
     }
   };

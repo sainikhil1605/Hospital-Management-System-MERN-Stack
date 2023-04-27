@@ -1,6 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { Nav, NavItem, NavLink } from "reactstrap";
 
+import { AiOutlineOrderedList } from "react-icons/ai";
+import { GrAddCircle } from "react-icons/gr";
 const PatientNav = ({ children }) => {
   const location = useLocation();
   return (
@@ -8,12 +10,22 @@ const PatientNav = ({ children }) => {
       <Nav tabs>
         <NavItem>
           <NavLink active={location.pathname === "/addPatient"}>
-            <Link to="/addPatient">Add Patient</Link>
+            <Link to="/addPatient">
+              <GrAddCircle
+                style={{ marginRight: "5px", marginBottom: "2px" }}
+              />
+              Add Patient
+            </Link>
           </NavLink>
         </NavItem>
         <NavItem>
           <NavLink active={location.pathname === "/patients"}>
-            <Link to="/patients">Patient List</Link>
+            <Link to="/patients">
+              <AiOutlineOrderedList
+                style={{ marginRight: "5px", marginBottom: "2px" }}
+              />
+              Patient List
+            </Link>
           </NavLink>
         </NavItem>
       </Nav>

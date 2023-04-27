@@ -13,6 +13,7 @@ const addBill = async (req, res) => {
   const admission = await Admission.findByIdAndUpdate(req.body.admission_id, {
     bill_id: bill._id,
   });
+  console.log(admission);
 
   res.status(StatusCodes.OK).json({ bill });
 };

@@ -10,8 +10,10 @@ const {
   addPatient,
   admitPatient,
   getAdmissionInfo,
+  addTreatment,
 } = require("../controllers/Patient");
 const { getBillByPatient } = require("../controllers/Bill");
+// const { addTreatement } = require("../controllers/Treatement");
 
 router.get("/", getAllPatientDetails);
 router.post("/", addPatient);
@@ -19,6 +21,7 @@ router.get("/:id", getPatientDetails);
 router.patch("/:id", updatePatient);
 router.delete("/:id", adminMiddleware, deletePatient);
 router.post("/admit", admitPatient);
+router.patch("/admit/:id", addTreatment);
 router.get("/admit/:id", getAdmissionInfo);
 router.get("/bill/:id", getBillByPatient);
 module.exports = router;

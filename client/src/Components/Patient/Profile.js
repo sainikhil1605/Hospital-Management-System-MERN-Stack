@@ -9,6 +9,9 @@ function Profile() {
   const [patientDetails, setPatientDetails] = useState({});
   const [loading, setLoading] = useState(true);
   const { _id } = jwt(localStorage.getItem("token"));
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [showChangePassword, setShowChangePassword] = useState(false);
   const history = useHistory();
   useEffect(() => {
     if (localStorage.getItem("token") === null) {
@@ -30,13 +33,84 @@ function Profile() {
     });
     alert("Details Updated Successfully");
   };
+  const handlePasswordChange = async () => {
+    try {
+      const res = await axiosInstance.patch(`/update/${_id}`, {
+        oldPassword,
+        newPassword,
+        role: "patient",
+      });
+      if (res.status === 200) {
+        setShowChangePassword(false);
+        window.alert("Password Changed Successfully");
+      }
+    } catch (e) {
+      console.log(e.response.data.error);
+      window.alert(e.response.data.error);
+    }
+  };
+
   console.log(patientDetails);
   if (loading) {
     return <Loader />;
   }
+  if (showChangePassword) {
+    return (
+      <div>
+        <Row>
+          <Col md="3"></Col>
+          <Col>
+            <h1>Change Password</h1>
+
+            <FormGroup>
+              <Row mt="3">
+                <Col sm="2">
+                  <Label>Old Password</Label>
+                </Col>
+                <Col sm="10">
+                  <Input
+                    type="password"
+                    name="oldPassword"
+                    value={oldPassword}
+                    onChange={(e) => {
+                      const temp = e.target.value;
+                      setOldPassword(temp);
+                    }}
+                  />
+                </Col>
+              </Row>
+            </FormGroup>
+            <FormGroup>
+              <Row mt="3">
+                <Col sm="2">
+                  <Label>New Password</Label>
+                </Col>
+                <Col sm="10">
+                  <Input
+                    type="password"
+                    name="new-password"
+                    value={newPassword}
+                    onChange={(e) => {
+                      const temp = e.target.value;
+                      setNewPassword(temp);
+                    }}
+                  />
+                </Col>
+              </Row>
+            </FormGroup>
+            <FormGroup>
+              <Button onClick={() => handlePasswordChange()}>Submit</Button>
+            </FormGroup>
+          </Col>
+          <Col sm="4"></Col>
+        </Row>
+      </div>
+    );
+  }
   return (
     <div>
       <Row className="mt-4">
+        <Col className="mt-4"></Col>
         <Col>
           <h1>Edit Profile</h1>
           <Form>
@@ -109,6 +183,18 @@ function Profile() {
                       })
                     }
                   />
+                </Col>
+              </Row>
+            </FormGroup>
+            <FormGroup>
+              <Row mt="3">
+                <Col sm="12">
+                  <Button
+                    color="primary"
+                    onClick={() => setShowChangePassword(true)}
+                  >
+                    Change Password?
+                  </Button>
                 </Col>
               </Row>
             </FormGroup>

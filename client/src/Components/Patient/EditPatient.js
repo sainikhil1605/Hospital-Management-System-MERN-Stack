@@ -1,9 +1,9 @@
 import { Row, Col, FormGroup, Button, Label, Input, Form } from "reactstrap";
-import { useHistory } from "react-router-dom";
-import React, { useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import moment from "moment";
-function AddPatientForm() {
+function EditPatientForm() {
   const [patientDetails, setPatientDetails] = useState({
     name: "",
     email: "",
@@ -14,12 +14,21 @@ function AddPatientForm() {
     birthdate: "",
     age: "",
   });
+  const { id } = useParams();
   const history = useHistory();
+  useEffect(() => {
+    const getData = async () => {
+      const {
+        data: { patient },
+      } = await axiosInstance.get(`/patient/${id}`);
+      setPatientDetails(patient?.[0]);
+    };
+    getData();
+  }, []);
   const handleSubmit = async () => {
-    const patient = await axiosInstance.post("/patient", patientDetails);
+    const patient = await axiosInstance.patch(`/patient/${id}`, patientDetails);
     history.push("/patients");
   };
-
   return (
     <div>
       <Row>
@@ -35,6 +44,7 @@ function AddPatientForm() {
                   <Col sm="10">
                     <Input
                       type="text"
+                      value={patientDetails["name"]}
                       onChange={(e) =>
                         setPatientDetails({
                           ...patientDetails,
@@ -53,6 +63,7 @@ function AddPatientForm() {
                   <Col sm="10">
                     <Input
                       type="email"
+                      value={patientDetails["email"]}
                       onChange={(e) =>
                         setPatientDetails({
                           ...patientDetails,
@@ -63,28 +74,7 @@ function AddPatientForm() {
                   </Col>
                 </Row>
               </FormGroup>
-              <FormGroup>
-                <Row>
-                  <Col sm="2">
-                    <Label>Password *</Label>
-                  </Col>
-                  <Col sm="10">
-                    <Input
-                      type="password"
-                      onChange={(e) =>
-                        setPatientDetails({
-                          ...patientDetails,
-                          password: e.target.value,
-                        })
-                      }
-                    />
-                    {/* <small>
-                      (Must be atleast of length 8 with one Uppercase,one
-                      Lowercase,a number and a special character)
-                    </small> */}
-                  </Col>
-                </Row>
-              </FormGroup>
+
               <FormGroup>
                 <Row>
                   <Col sm="2">
@@ -93,6 +83,7 @@ function AddPatientForm() {
                   <Col sm="10">
                     <Input
                       type="text"
+                      value={patientDetails["address"]}
                       onChange={(e) =>
                         setPatientDetails({
                           ...patientDetails,
@@ -111,6 +102,7 @@ function AddPatientForm() {
                   <Col sm="10">
                     <Input
                       type="phone"
+                      value={patientDetails["phone"]}
                       onChange={(e) =>
                         setPatientDetails({
                           ...patientDetails,
@@ -129,6 +121,7 @@ function AddPatientForm() {
                   <Col sm="10">
                     <Input
                       type="text"
+                      value={patientDetails["sex"]}
                       onChange={(e) =>
                         setPatientDetails({
                           ...patientDetails,
@@ -147,6 +140,10 @@ function AddPatientForm() {
                   <Col sm="10">
                     <Input
                       type="date"
+                      value={moment(patientDetails["birthdate"])
+                        .utc()
+                        .format("YYYY-MM-DD")
+                        .toString()}
                       onChange={(e) =>
                         setPatientDetails({
                           ...patientDetails,
@@ -157,7 +154,6 @@ function AddPatientForm() {
                   </Col>
                 </Row>
               </FormGroup>
-
               <FormGroup>
                 <Row>
                   <Col sm="2"></Col>
@@ -176,4 +172,4 @@ function AddPatientForm() {
     </div>
   );
 }
-export default AddPatientForm;
+export default EditPatientForm;

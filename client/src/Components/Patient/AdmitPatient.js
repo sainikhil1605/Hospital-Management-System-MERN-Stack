@@ -25,7 +25,9 @@ const AdmitPatient = () => {
   const [carriers, setCarriers] = useState(null);
   const [prevAdmissions, setPrevAdmissions] = useState(null);
   const history = useHistory();
-
+  const [showTreatment, setShowTreatment] = useState(false);
+  const [treatments, setTreatments] = useState([{ name: "", cost: "" }]);
+  const [admissionId, setAdmissionId] = useState(null);
   const handleSubmit = async () => {
     console.log({ ...admitData, patient_id: id });
     const admit = await axiosInstance.post("/patient/admit", {
@@ -35,11 +37,23 @@ const AdmitPatient = () => {
     history.push("/patients");
   };
   const handleDischarge = async (e) => {
+    const {
+      data: { treatment },
+    } = await axiosInstance.post("/treatement", treatments);
+    // console.log(treatment);
+    const {
+      data: { admission },
+    } = await axiosInstance.patch(`/patient/admit/${admissionId}`, {
+      treatment: treatment,
+    });
+
     const discharge = await axiosInstance.post("/bill", {
       patient_id: id,
-      admission_id: e.target.id,
+      admission_id: admissionId,
       discharge_date: new Date(),
     });
+
+    console.log(admission);
     history.push(`/patient/${id}`);
   };
   useEffect(() => {
@@ -63,6 +77,7 @@ const AdmitPatient = () => {
     };
     getData();
   }, []);
+  useEffect(() => {}, [treatments]);
   if (!doctors) {
     return <Loader />;
   }
@@ -75,6 +90,83 @@ const AdmitPatient = () => {
       }
     });
   };
+  console.log(treatments);
+  if (showTreatment) {
+    return (
+      <div>
+        <h3>Please Add Treatements for patient before discharge</h3>
+        {treatments.map((treatment, index) => (
+          <FormGroup>
+            <Row>
+              <Col sm="2">
+                <Label for="docname">Treatment Name</Label>
+              </Col>
+              <Col sm="4">
+                <Input
+                  type="text"
+                  onChange={(e) => {
+                    let temp = treatments;
+                    temp[index].name = e.target.value;
+                    setTreatments([...temp]);
+                  }}
+                />
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col sm="2">
+                <Label for="docname">Treatment Cost</Label>
+              </Col>
+              <Col sm="4">
+                <Input
+                  type="number"
+                  onChange={(e) => {
+                    let temp = treatments;
+                    temp[index].cost = e.target.value;
+                    setTreatments([...temp]);
+                  }}
+                />
+              </Col>
+            </Row>
+
+            <Row>
+              <Col sm="2">
+                <Button
+                  color="danger"
+                  onClick={() => {
+                    let temp = treatments;
+                    temp.splice(index, 1);
+                    setTreatments([...temp]);
+                  }}
+                >
+                  Remove
+                </Button>
+              </Col>
+            </Row>
+          </FormGroup>
+        ))}
+        <Row className="mt-3">
+          <Col sm="2">
+            <Label for="docname">Add More Treatments?</Label>
+          </Col>
+          <Col sm="4">
+            <Button
+              color="primary"
+              onClick={() => {
+                let temp = treatments;
+                temp.push({ name: "", cost: "" });
+                setTreatments([...temp]);
+              }}
+            >
+              Add More
+            </Button>
+          </Col>
+        </Row>
+        <Button color="primary" onClick={() => handleDischarge()}>
+          Submit
+        </Button>
+      </div>
+    );
+  }
   if (hasPreviousAdmission(prevAdmissions)) {
     return (
       <div>
@@ -103,7 +195,10 @@ const AdmitPatient = () => {
                     <Button
                       id={admission._id}
                       color="danger"
-                      onClick={(e) => handleDischarge(e)}
+                      onClick={(e) => {
+                        setAdmissionId(e.target.id);
+                        setShowTreatment(true);
+                      }}
                     >
                       Discharge Patient
                     </Button>

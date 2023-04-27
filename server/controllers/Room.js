@@ -6,6 +6,16 @@ const getRooms = async (req, res) => {
 
   res.status(StatusCodes.OK).json({ rooms });
 };
+const deleteRoom = async (req, res) => {
+  const { id } = req.params;
+  const room = await Room.findByIdAndDelete(id);
+  if (!room) {
+    res.status(StatusCodes.BAD_REQUEST).json({ error: "Room not found" });
+  } else {
+    res.status(StatusCodes.OK).json({ room });
+  }
+};
+
 const getRoom = async (req, res) => {
   const { id } = req.params;
   const room = await Admission.find({ room_id: id }).populate("patient_id");
@@ -21,9 +31,16 @@ const updateRoom = async (req, res) => {
   const room = await Room.findByIdAndUpdate(id, req.body);
   res.status(StatusCodes.OK).json({ room });
 };
+const getRoomDetails = async (req, res) => {
+  const { id } = req.params;
+  const room = await Room.findById(id);
+  res.status(StatusCodes.OK).json({ room });
+};
 module.exports = {
   getRooms,
   postRooms,
   updateRoom,
   getRoom,
+  deleteRoom,
+  getRoomDetails,
 };

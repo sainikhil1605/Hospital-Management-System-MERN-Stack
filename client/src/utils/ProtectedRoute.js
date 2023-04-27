@@ -1,8 +1,13 @@
 import jwtDecode from "jwt-decode";
 import { Redirect, Route } from "react-router-dom";
 
-const ProtectedRoute = ({ component: Component, isAdminRoute, ...rest }) => {
+const ProtectedRoute = ({ children, isAdminRoute, ...rest }) => {
   const { role } = jwtDecode(localStorage.getItem("token"));
+  console.log(role);
+  console.log(
+    (localStorage.getItem("token") && isAdminRoute && role === "admin") ||
+      !isAdminRoute
+  );
   return (
     <Route
       {...rest}
@@ -11,7 +16,7 @@ const ProtectedRoute = ({ component: Component, isAdminRoute, ...rest }) => {
           (localStorage.getItem("token") && isAdminRoute && role === "admin") ||
           !isAdminRoute
         ) {
-          return <Component {...props} />;
+          return children;
         } else {
           return <Redirect to="/login" />;
         }

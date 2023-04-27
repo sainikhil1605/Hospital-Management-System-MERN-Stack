@@ -33,7 +33,7 @@ function Patients() {
     <div>
       <div>
         <Row>
-          <Col className=" mt-3" style={{ margin: "auto", maxWidth: "900px" }}>
+          <Col className=" mt-3" style={{ margin: "auto", maxWidth: "1100px" }}>
             <Input
               placeholder="Search..."
               type="text"
@@ -75,6 +75,17 @@ function Patients() {
                           <th scope="row">{index + 1}</th>
                           <td>{patient.name}</td>
                           <td>{patient.email}</td>
+                          <td>
+                            <Button
+                              color="primary"
+                              id={patient._id}
+                              onClick={(e) =>
+                                history.push(`/patient/edit/${e.target.id}`)
+                              }
+                            >
+                              Edit Patient Details
+                            </Button>
+                          </td>
                           <td>
                             <Button
                               color="primary"

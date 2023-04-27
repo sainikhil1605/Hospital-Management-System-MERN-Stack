@@ -21,7 +21,7 @@ const Rooms = () => {
         <Table
           striped
           style={{
-            width: "50%",
+            width: "85%",
             "box-shadow": "2px 2px 4px 4px #CCCCCC",
             marginTop: "30px",
             margin: "auto",
@@ -34,6 +34,7 @@ const Rooms = () => {
               <th>Cost Per Day</th>
               <th>Meal Cost Per Day</th>
               <th>Total No of Beds</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -45,6 +46,7 @@ const Rooms = () => {
                   <td>{room.cost_per_day}</td>
                   <td>{room.meal_cost_per_day}</td>
                   <td>{room.no_of_beds}</td>
+
                   <td>
                     <Button
                       color="primary"
@@ -53,6 +55,31 @@ const Rooms = () => {
                       onClick={(e) => history.push(`/rooms/${e.target.id}`)}
                     >
                       View Patients
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      color="primary"
+                      style={{ width: "100%" }}
+                      id={room._id}
+                      onClick={(e) =>
+                        history.push(`/rooms/edit/${e.target.id}`)
+                      }
+                    >
+                      Edit Room Details
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      color="danger"
+                      style={{ width: "100%" }}
+                      id={room._id}
+                      onClick={async (e) => {
+                        await axiosInstance.delete(`/room/${e.target.id}`);
+                        window.location.reload();
+                      }}
+                    >
+                      Delete
                     </Button>
                   </td>
                 </tr>

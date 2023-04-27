@@ -8,6 +8,15 @@ const getPatientDetails = async (req, res) => {
 
   res.status(StatusCodes.OK).json({ patient });
 };
+const addTreatment = async (req, res) => {
+  const { id } = req.params;
+  const { treatment } = req.body;
+  const admission = await Admission.findByIdAndUpdate(id, {
+    $push: { treatments: treatment },
+  });
+  res.status(StatusCodes.OK).json({ admission });
+};
+
 const getAllPatientDetails = async (req, res) => {
   const patients = await Patient.find({}).select("-password");
   res.status(StatusCodes.OK).json({ patients });
@@ -60,4 +69,5 @@ module.exports = {
   addPatient,
   admitPatient,
   getAdmissionInfo,
+  addTreatment,
 };

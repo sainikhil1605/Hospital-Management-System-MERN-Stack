@@ -32,6 +32,8 @@ import CarrierNav from "./Components/Carriers/CarrierNav";
 import AddCarrier from "./Components/Carriers/AddCarrier";
 import EditDoctor from "./Components/Doctor/EditDoctor";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import EditPatientForm from "./Components/Patient/EditPatient";
+import EditRoom from "./Components/Rooms/EditRoom";
 function App() {
   const location = useLocation();
   return (
@@ -64,14 +66,17 @@ function App() {
               <DoctorList />
             </DoctorNav>
           </Route>
-          <Route exact path="/doctors/add">
+          <ProtectedRoute isAdminRoute exact path="/doctors/add">
             <DoctorNav>
               <AddDoctor />
             </DoctorNav>
-          </Route>
+          </ProtectedRoute>
 
-          <ProtectedRoute path="/admin/profile">
+          <ProtectedRoute isAdminRoute path="/admin/profile">
             <AdminProfile />
+          </ProtectedRoute>
+          <ProtectedRoute isAdminRoute path="/patient/edit/:id">
+            <EditPatientForm />
           </ProtectedRoute>
 
           <Route exact path="/patients">
@@ -100,6 +105,9 @@ function App() {
             <RoomNav>
               <AddRoom />
             </RoomNav>
+          </Route>
+          <Route path="/rooms/edit/:id">
+            <EditRoom />
           </Route>
           <Route path="/rooms/:id">
             <RoomNav>

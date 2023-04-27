@@ -2,6 +2,11 @@ import jwtDecode from "jwt-decode";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
+import { FaBriefcaseMedical, FaMoneyBill } from "react-icons/fa";
+import { GiMedicalThermometer } from "react-icons/gi";
+import { CgProfile } from "react-icons/cg";
+import { RiHospitalFill } from "react-icons/ri";
+import { GiTwoCoins } from "react-icons/gi";
 import {
   Button,
   Collapse,
@@ -29,23 +34,43 @@ function NavBar() {
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem className="mynav">
-                <NavLink activeStyle={{ color: "#61dafb" }} to="/user/profile">
-                  Profile
-                </NavLink>
-              </NavItem>
-              <NavItem className="mynav">
                 <NavLink activeStyle={{ color: "#61dafb" }} to="/doctors">
-                  Doctors
+                  <span>
+                    <FaBriefcaseMedical
+                      style={{ marginBottom: "5px", marginRight: "5px" }}
+                    />
+                    Doctors
+                  </span>
                 </NavLink>
               </NavItem>
               <NavItem className="mynav">
                 <NavLink activeStyle={{ color: "#61dafb" }} to="/user/bills">
-                  Bills
+                  <span>
+                    <FaMoneyBill
+                      style={{ marginBottom: "5px", marginRight: "5px" }}
+                    />
+                    Bills
+                  </span>
                 </NavLink>
               </NavItem>
               <NavItem className="mynav">
                 <NavLink activeStyle={{ color: "#61dafb" }} to="/carriers">
-                  Insurance Carriers
+                  <span>
+                    <GiTwoCoins
+                      style={{ marginBottom: "5px", marginRight: "5px" }}
+                    />
+                    Insurance Carriers
+                  </span>
+                </NavLink>
+              </NavItem>
+              <NavItem className="mynav">
+                <NavLink activeStyle={{ color: "#61dafb" }} to="/user/profile">
+                  <span>
+                    <CgProfile
+                      style={{ marginBottom: "5px", marginRight: "5px" }}
+                    />
+                    Profile
+                  </span>
                 </NavLink>
               </NavItem>
             </Nav>
@@ -68,32 +93,63 @@ function NavBar() {
           <Nav className="mr-auto" navbar>
             <NavItem className="mynav">
               <NavLink activeStyle={{ color: "#61dafb" }} to="/doctors/">
-                Doctors
+                <span>
+                  <FaBriefcaseMedical
+                    style={{ marginBottom: "5px", marginRight: "5px" }}
+                  />
+                  Doctors
+                </span>
               </NavLink>
             </NavItem>
             <NavItem className="mynav">
               <NavLink activeStyle={{ color: "#61dafb" }} to="/patients">
-                Patients
+                <span>
+                  <GiMedicalThermometer
+                    style={{ marginBottom: "5px", marginRight: "5px" }}
+                  />
+                  Patients
+                </span>
               </NavLink>
             </NavItem>
             <NavItem className="mynav">
               <NavLink activeStyle={{ color: "#61dafb" }} to="/bills">
-                Bills
+                <span>
+                  <FaMoneyBill
+                    style={{ marginBottom: "5px", marginRight: "5px" }}
+                  />
+                  Bills
+                </span>
               </NavLink>
             </NavItem>
-            <NavItem className="mynav">
-              <NavLink activeStyle={{ color: "#61dafb" }} to="/admin/profile">
-                Profile
-              </NavLink>
-            </NavItem>
+
             <NavItem className="mynav">
               <NavLink activeStyle={{ color: "#61dafb" }} to="/rooms">
-                Rooms
+                <span>
+                  <RiHospitalFill
+                    style={{ marginBottom: "5px", marginRight: "5px" }}
+                  />
+                  Rooms
+                </span>
               </NavLink>
             </NavItem>
             <NavItem className="mynav">
               <NavLink activeStyle={{ color: "#61dafb" }} to="/carriers">
-                Insurance Carriers
+                <span>
+                  <GiTwoCoins
+                    style={{ marginBottom: "5px", marginRight: "5px" }}
+                  />
+                  Insurance Carriers
+                </span>
+              </NavLink>
+            </NavItem>
+            <NavItem className="mynav">
+              <NavLink activeStyle={{ color: "#61dafb" }} to="/admin/profile">
+                <span>
+                  <CgProfile
+                    style={{ marginBottom: "5px", marginRight: "5px" }}
+                  />
+                  Profile
+                </span>
               </NavLink>
             </NavItem>
           </Nav>
