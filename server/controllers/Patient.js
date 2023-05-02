@@ -8,9 +8,17 @@ const getPatientDetails = async (req, res) => {
 
   res.status(StatusCodes.OK).json({ patient });
 };
+const getAdmittedPatients = async (req, res) => {
+  const patients = await Admission.find({
+    bill_id: { $exists: null },
+  }).populate("patient_id");
+  // console.log(patients);
+  res.status(StatusCodes.OK).json({ patients });
+};
 const addTreatment = async (req, res) => {
   const { id } = req.params;
   const { treatment } = req.body;
+  console.log(treatment);
   const admission = await Admission.findByIdAndUpdate(id, {
     $push: { treatments: treatment },
   });
@@ -70,4 +78,5 @@ module.exports = {
   admitPatient,
   getAdmissionInfo,
   addTreatment,
+  getAdmittedPatients,
 };

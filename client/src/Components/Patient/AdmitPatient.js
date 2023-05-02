@@ -56,6 +56,12 @@ const AdmitPatient = () => {
     console.log(admission);
     history.push(`/patient/${id}`);
   };
+  // const getRoomsWithSpace =async (rooms) => {
+  //   rooms.map((room)=>(
+  //     const patients=await axiosInstance.get(`/rooms/${id}`);
+  //   ))
+
+  // }
   useEffect(() => {
     const getData = async () => {
       const {
@@ -69,7 +75,25 @@ const AdmitPatient = () => {
       const {
         data: { rooms },
       } = await axiosInstance.get("/room");
-      setRooms(rooms);
+
+      const filteredRooms = await Promise.all(
+        rooms.map(async (room) => {
+          const {
+            data: { room: roomData },
+          } = await axiosInstance.get(`/room/${room._id}`);
+          // console.log(roomData.length);
+          // console.log(room.no_of_beds);
+          if (roomData.length < room.no_of_beds) {
+            return room;
+          }
+        })
+      ).then((res) => res.filter(Boolean));
+
+      console.log(filteredRooms);
+
+      // getRoomsWithSpace(rooms);
+
+      setRooms(filteredRooms);
       const {
         data: { carriers },
       } = await axiosInstance.get("/carrier");
@@ -90,7 +114,7 @@ const AdmitPatient = () => {
       }
     });
   };
-  console.log(treatments);
+  // console.log(treatments);
   if (showTreatment) {
     return (
       <div>

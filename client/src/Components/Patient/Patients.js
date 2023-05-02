@@ -39,6 +39,13 @@ function Patients() {
               type="text"
               onChange={(e) => setSearch(e.target.value)}
             />
+            <Button
+              className="mt-3"
+              color="primary"
+              onClick={() => history.push("/admittedPatients")}
+            >
+              View Admitted Patients
+            </Button>
             <Table
               striped
               style={{

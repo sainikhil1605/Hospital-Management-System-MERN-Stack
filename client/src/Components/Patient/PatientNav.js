@@ -9,8 +9,8 @@ const PatientNav = ({ children }) => {
     <>
       <Nav tabs>
         <NavItem>
-          <NavLink active={location.pathname === "/addPatient"}>
-            <Link to="/addPatient">
+          <NavLink active={location.pathname === "/patients/add"}>
+            <Link to="/patients/add">
               <GrAddCircle
                 style={{ marginRight: "5px", marginBottom: "2px" }}
               />

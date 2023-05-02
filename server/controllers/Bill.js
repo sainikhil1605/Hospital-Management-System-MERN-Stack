@@ -35,6 +35,13 @@ const getBill = async (req, res) => {
         path: "doctor_id",
         model: "doctor",
       },
+    })
+    .populate({
+      path: "admission_id",
+      populate: {
+        path: "treatments",
+        model: "Treatment",
+      },
     });
   res.status(StatusCodes.OK).json({ bill });
 };

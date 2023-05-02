@@ -34,6 +34,7 @@ import EditDoctor from "./Components/Doctor/EditDoctor";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import EditPatientForm from "./Components/Patient/EditPatient";
 import EditRoom from "./Components/Rooms/EditRoom";
+import AdmittedPatients from "./Components/Patient/AdmittedPatients";
 function App() {
   const location = useLocation();
   return (
@@ -84,7 +85,7 @@ function App() {
               <Patients />
             </PatientNav>
           </Route>
-          <Route exact path="/addPatient">
+          <Route exact path="/patients/add">
             <PatientNav>
               <AddPatientForm />
             </PatientNav>
@@ -105,6 +106,9 @@ function App() {
             <RoomNav>
               <AddRoom />
             </RoomNav>
+          </Route>
+          <Route path="/admittedPatients">
+            <AdmittedPatients />
           </Route>
           <Route path="/rooms/edit/:id">
             <EditRoom />
