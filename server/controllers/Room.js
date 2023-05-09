@@ -18,7 +18,10 @@ const deleteRoom = async (req, res) => {
 
 const getRoom = async (req, res) => {
   const { id } = req.params;
-  const room = await Admission.find({ room_id: id }).populate("patient_id");
+  const room = await Admission.find({
+    room_id: id,
+    bill_id: { $exists: null },
+  }).populate("patient_id");
   res.status(StatusCodes.OK).json({ room });
 };
 const postRooms = async (req, res) => {

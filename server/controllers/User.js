@@ -12,6 +12,8 @@ const Login = async (req, res) => {
   let currModel;
   if (role === "admin") {
     currModel = Admin;
+  } else if (role == "doctor") {
+    currModel = Doctor;
   } else {
     currModel = Patient;
   }

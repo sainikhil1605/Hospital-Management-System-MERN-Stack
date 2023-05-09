@@ -22,7 +22,7 @@ app.use(cors());
 // app.use("/api/v1/treatement", require("./routes/Treatement"));
 app.use("/api/v1", require("./routes/User"));
 app.use("/api/v1/patient", authMiddleware, require("./routes/Patient"));
-app.use("/api/v1/doctor", authMiddleware, require("./routes/Doctor"));
+app.use("/api/v1/doctor", require("./routes/Doctor"));
 app.use("/api/v1/admin", authMiddleware, require("./routes/Admin"));
 app.use("/api/v1/room", authMiddleware, require("./routes/Room"));
 app.use("/api/v1/carrier", authMiddleware, require("./routes/Carrier"));

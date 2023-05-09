@@ -51,6 +51,22 @@ const AddDoctor = () => {
         <FormGroup>
           <Row>
             <Col sm="2">
+              <Label for="password">Password *</Label>
+            </Col>
+            <Col sm="8">
+              <Input
+                type="password"
+                name="password"
+                onChange={(e) =>
+                  setDocDetails({ ...docDetails, password: e.target.value })
+                }
+              />
+            </Col>
+          </Row>
+        </FormGroup>
+        <FormGroup>
+          <Row>
+            <Col sm="2">
               <Label for="docname">Fee</Label>
             </Col>
             <Col sm="8">

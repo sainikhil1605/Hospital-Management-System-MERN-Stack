@@ -55,12 +55,14 @@ function LogIn() {
       dispatch({ type: "LOG_IN", payload: { token, name, role } });
       if (role === "admin") {
         history.push(`/doctors/`);
+      } else if (role === "doctor") {
+        history.push(`/doctor/profile`);
       } else {
         history.push(`/user/profile`);
       }
     } catch (err) {
-      console.log(err.error);
-      setLoginError(err.error);
+      console.log(err);
+      setLoginError(err.response.data.error);
     }
   };
   console.log(location);

@@ -3,13 +3,14 @@ import { useSelector } from "react-redux";
 import { Button, Col, Input, Row, Table } from "reactstrap";
 import axiosInstance from "../../utils/axiosInstance";
 import Loader from "../Loader";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 function DoctorList() {
   const [doctors, setDoctors] = useState([]);
   const [search, setSearch] = useState("");
   const role = useSelector((state) => state.login.role);
   const [loading, setLoading] = useState(true);
   const history = useHistory();
+  const location = useLocation();
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
@@ -23,6 +24,7 @@ function DoctorList() {
   }, []);
   const handleDelete = async (id) => {
     await axiosInstance.delete(`/doctor/${id}`);
+    location.reload();
   };
   if (loading) {
     return <Loader />;
@@ -75,7 +77,7 @@ function DoctorList() {
                         <td>{doctor.department}</td>
                         {role !== "admin" ? null : (
                           <>
-                            <td>
+                            {/* <td>
                               <Button
                                 id={doctor._id}
                                 color="danger"
@@ -83,7 +85,7 @@ function DoctorList() {
                               >
                                 Delete
                               </Button>
-                            </td>
+                            </td> */}
                             <td>
                               <Button
                                 id={doctor._id}

@@ -85,6 +85,49 @@ function NavBar() {
       </div>
     );
   }
+  if (role === "doctor") {
+    return (
+      <div>
+        <Navbar style={{ backgroundColor: "#242526" }} dark expand="md">
+          <NavbarToggler onClick={() => setOpen(!isOpen)} />
+          <Collapse isOpen={isOpen} navbar>
+            <Nav className="mr-auto" navbar>
+              <NavItem className="mynav">
+                <NavLink activeStyle={{ color: "#61dafb" }} to="/patients">
+                  <span>
+                    <GiMedicalThermometer
+                      style={{ marginBottom: "5px", marginRight: "5px" }}
+                    />
+                    Patients
+                  </span>
+                </NavLink>
+              </NavItem>
+
+              <NavItem className="mynav">
+                <NavLink
+                  activeStyle={{ color: "#61dafb" }}
+                  to="/doctor/profile"
+                >
+                  <span>
+                    <CgProfile
+                      style={{ marginBottom: "5px", marginRight: "5px" }}
+                    />
+                    Profile
+                  </span>
+                </NavLink>
+              </NavItem>
+            </Nav>
+
+            <NavbarText>
+              <Button color="danger" onClick={() => Logout()}>
+                Logout
+              </Button>
+            </NavbarText>
+          </Collapse>
+        </Navbar>
+      </div>
+    );
+  }
   return (
     <div>
       <Navbar style={{ backgroundColor: "#242526" }} dark expand="md">

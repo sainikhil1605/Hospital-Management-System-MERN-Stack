@@ -15,6 +15,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import Loader from "../Loader";
 import moment from "moment";
 import { DatePicker } from "reactstrap-date-picker";
+import jwtDecode from "jwt-decode";
 const AdmitPatient = () => {
   const { id } = useParams();
 
@@ -25,9 +26,14 @@ const AdmitPatient = () => {
   const [carriers, setCarriers] = useState(null);
   const [prevAdmissions, setPrevAdmissions] = useState(null);
   const history = useHistory();
-  const [showTreatment, setShowTreatment] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [treatments, setTreatments] = useState([{ name: "", cost: "" }]);
   const [admissionId, setAdmissionId] = useState(null);
+  const { role } = jwtDecode(localStorage.getItem("token"));
+  const [showTreatment, setShowTreatment] = useState(
+    role === "doctor" ? true : false
+  );
+
   const handleSubmit = async () => {
     console.log({ ...admitData, patient_id: id });
     const admit = await axiosInstance.post("/patient/admit", {
@@ -53,25 +59,48 @@ const AdmitPatient = () => {
       discharge_date: new Date(),
     });
 
-    console.log(admission);
-    history.push(`/patient/${id}`);
+    if (role === "doctor") {
+      history.push("/patients");
+    } else {
+      history.push(`/patient/${id}`);
+    }
   };
-  // const getRoomsWithSpace =async (rooms) => {
-  //   rooms.map((room)=>(
-  //     const patients=await axiosInstance.get(`/rooms/${id}`);
-  //   ))
 
-  // }
+  const hasPreviousAdmission = (admissions) => {
+    // console.log(admissions);
+    return admissions?.some((admit) => {
+      if (admit.bill_id === undefined) {
+        // setAdmissionId(admit._id);
+        return true;
+      } else {
+        return false;
+      }
+    });
+  };
   useEffect(() => {
     const getData = async () => {
+      setLoading(true);
       const {
         data: { admission },
       } = await axiosInstance.get(`/patient/admit/${id}`);
       setPrevAdmissions(admission);
+      //  else {
       const {
         data: { doctors },
       } = await axiosInstance.get("/doctor");
-      setDoctors(doctors);
+      // console.log(doctors);
+      admission?.some((admit) => {
+        if (admit.bill_id === undefined) {
+          setAdmissionId(admit._id);
+          return true;
+        } else {
+          return false;
+        }
+      });
+      if (doctors) {
+        setDoctors([...doctors]);
+      }
+
       const {
         data: { rooms },
       } = await axiosInstance.get("/room");
@@ -97,25 +126,30 @@ const AdmitPatient = () => {
       const {
         data: { carriers },
       } = await axiosInstance.get("/carrier");
-      setCarriers(carriers);
+      setCarriers([...carriers]);
+      setLoading(false);
+      // }
+      // hasPreviousAdmission(prevAdmissions);
     };
+
     getData();
   }, []);
+  useEffect(() => {
+    if (role === "doctor") {
+      hasPreviousAdmission(prevAdmissions);
+    }
+    console.log("Boom");
+  }, [admissionId]);
   useEffect(() => {}, [treatments]);
-  if (!doctors) {
+  console.log(doctors);
+  if (loading && role !== "doctor") {
     return <Loader />;
   }
-  const hasPreviousAdmission = (admissions) => {
-    return admissions.some((admit) => {
-      if (admit.bill_id === undefined) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-  };
+  // useEffect(() => {}, []);
+
   // console.log(treatments);
   if (showTreatment) {
+    // hasPreviousAdmission(prevAdmissions);
     return (
       <div>
         <h3>Please Add Treatements for patient before discharge</h3>
