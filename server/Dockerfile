@@ -10,7 +10,7 @@ COPY package*.json ./
 COPY . /app
 
 # Install the application dependencies
-RUN npm install
+RUN npm install--force
 EXPOSE 5000
 # Define the entry point for the container
 CMD ["npm", "start"]
